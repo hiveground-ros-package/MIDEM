@@ -1,0 +1,50 @@
+<?xml version="1.0" ?>
+<robot name="midem_dual" xmlns:xacro="http://ros.org/wiki/xacro">
+    <xacro:property name="PI" value="3.141592"/>
+
+    <link name="base"/>
+    <xacro:vp6242 prefix="arm0_"/>
+	<include filename="$(find vp6242_description)/urdf/vp6242_macro.xacro"/>
+	<xacro:vp6242 prefix="arm1_"/>
+	<include filename="$(find vp6242_description)/urdf/vp6242_macro.xacro"/>
+	<xacro:vp6242 prefix="arm2_"/>
+    <include filename="$(find vp6242_description)/urdf/vp6242_macro.xacro"/>
+    <xacro:vp6242 prefix="arm3_"/>
+    <include filename="$(find vp6242_description)/urdf/vp6242_macro.xacro"/>
+    <xacro:vp6242 prefix="arm4_"/>
+    <include filename="$(find vp6242_description)/urdf/vp6242_macro.xacro"/>
+    <xacro:vp6242 prefix="arm5_"/>
+    <include filename="$(find vp6242_description)/urdf/vp6242_macro.xacro"/>
+    
+    <joint name="base_arm0" type="fixed">
+        <parent link="base"/>
+        <child link="arm0_world"/>
+        <origin xyz="0.5 -0.5 0" rpy="0 0 ${PI}"/>
+    </joint>
+    <joint name="base_arm1" type="fixed">
+        <parent link="base"/>
+        <child link="arm1_world"/>
+        <origin xyz="0.5 0.0 0" rpy="0 0 ${PI}"/>
+    </joint>    
+    <joint name="base_arm2" type="fixed">
+        <parent link="base"/>
+        <child link="arm2_world"/>
+        <origin xyz="0.5 0.5 0" rpy="0 0 ${PI}"/>
+    </joint>
+    
+    <joint name="base_arm3" type="fixed">
+        <parent link="base"/>
+        <child link="arm3_world"/>
+        <origin xyz="-0.5 -0.5 0" rpy="0 0 0"/>
+    </joint>
+    <joint name="base_arm4" type="fixed">
+        <parent link="base"/>
+        <child link="arm4_world"/>
+        <origin xyz="-0.5 0.0 0" rpy="0 0 0"/>
+    </joint>    
+    <joint name="base_arm5" type="fixed">
+        <parent link="base"/>
+        <child link="arm5_world"/>
+        <origin xyz="-0.5 0.5 0" rpy="0 0 0"/>
+    </joint>
+</robot>

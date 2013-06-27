@@ -1,0 +1,8 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: midem_description
+    relative_path: urdf/midem.xacro
+  SRDF:
+    relative_path: config/midem.srdf
+  CONFIG:
+    generated_timestamp: 1372343446
