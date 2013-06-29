@@ -1,12 +1,13 @@
-<launch>
+<launch>	
     <rosparam>
         JointStateController:
             type: joint_state_controller/JointStateController
             publish_rate: 100        
-    </rosparam>         
-    <param name="robot_description" command="$(find xacro)/xacro.py $(find vp6242_description)/urdf/vp6242.xacro"/>
-    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen"/>
-    <node pkg="denso_rc7m_controller" type="denso_rc7m_controller" name="midem_node" output="screen">
+    </rosparam>
+    <param name="robot_description" textfile="$(find midem_description)/urdf/midem.urdf"/>
+    <!--param name="robot_description" command="$(find xacro)/xacro.py $(find vp6242_description)/urdf/vp6242.xacro"/-->
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen"/>        
+	<node pkg="denso_rc7m_controller" type="denso_rc7m_controller" name="midem_node" output="screen">
          <rosparam>
             realtime: false          
             prefix: ""
@@ -21,4 +22,6 @@
                 joints: [joint1, joint2, joint3, joint4, joint5, joint6]                  
          </rosparam>
     </node> 
+	<include file="$(find midem_moveit_config)/launch/midem_moveit_planning_execution.launch" />
+
 </launch>

@@ -32,10 +32,19 @@
 
 #include <midem_moveit/midem_moveit.h>
 
-
-
 int main(int argc, char** argv)
 {
+  ros::init(argc, argv, "state_display_tutorial");
+
+  /* Needed for ROS_INFO commands to work */
+  ros::AsyncSpinner spinner(1);
+  spinner.start();
+
+  robot_model_loader::RobotModelLoader robot_model_loader("robot_description");
+  robot_model::RobotModelPtr kinematic_model = robot_model_loader.getModel();
+  ROS_INFO("Model frame: %s", kinematic_model->getModelFrame().c_str());
+
+
   return 0;
 }
 
