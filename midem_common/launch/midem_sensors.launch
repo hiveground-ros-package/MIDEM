@@ -1,0 +1,20 @@
+<launch>
+  <node pkg="tf" type="static_transform_publisher" name="kinect_top_tf" args="0.457193063872 0.638211158375 1.31218758894 0.708001238099 0.706158935197 -0.00335022547065 -0.00791082055707  world kinect_top_rgb_optical_frame 100" />
+  <node pkg="tf" type="static_transform_publisher" name="kinect_top_front_tf" args="-0.0880483013685 -0.562642246961 0.163701135884 -0.0222102171279 -0.312266100839 -0.949715060437 0.00615568853821 /kinect_top_rgb_optical_frame /kinect_front_rgb_optical_frame 100" />
+
+  <include file="$(find openni_launch)/launch/openni.launch">    
+    <arg name="camera" value="kinect_top" />
+    <arg name="device_id" value="A00363807157051A" />
+    <arg name="depth_registration" value="true" />
+    <arg name="publish_tf" value="false" />
+  </include> 
+
+  <include file="$(find openni_launch)/launch/openni.launch">    
+    <arg name="camera" value="kinect_front" />
+    <arg name="device_id" value="A00366A10885046A" />
+    <arg name="depth_registration" value="true" />
+    <arg name="publish_tf" value="false" />
+  </include> 
+
+</launch>
+

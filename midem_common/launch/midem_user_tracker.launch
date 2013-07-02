@@ -1,0 +1,9 @@
+<launch>
+    <node pkg="user_tracker" type="user_tracker" name="user_tracker" output="screen">
+        <rosparam>
+            camera_frame_id: /kinect_front_depth_optical_frame
+            camera_id: 1
+        </rosparam>
+    </node>
+</launch>
+
