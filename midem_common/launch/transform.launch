@@ -1,0 +1,22 @@
+<launch>	
+  <arg name="camera1" default="kinect_top"/>
+  <arg name="camera2" default="kinect_front"/> 
+
+  <node pkg="tf" type="static_transform_publisher" name="vp6242_tf" args="-0.1025 -0.8375 0 0 0 0 1 /base_link /table 100" />  
+
+  <node pkg="tf" type="static_transform_publisher" name="$(arg camera1)_tf" 
+    args="0.457193063872 0.638211158375 1.31218758894 
+          0.708001238099 0.706158935197 -0.00335022547065 -0.00791082055707
+          /table /kinect_top_rgb_optical_frame 100" />
+  <include file="$(find midem_common)/launch/kinect_frames.launch">
+      <arg name="camera" value="$(arg camera1)" />
+  </include>
+
+  <node pkg="tf" type="static_transform_publisher" name="$(arg camera2)_tf" 
+    args="-0.0540849447978 -0.536468760324 0.142083446363 
+          -0.00157280231467 0.354200071747 0.93515116323 0.00566898371406
+          /kinect_top_rgb_optical_frame /kinect_front_rgb_optical_frame 100" />
+  <include file="$(find midem_common)/launch/kinect_frames.launch">
+      <arg name="camera" value="$(arg camera2)" />
+  </include>
+</launch>

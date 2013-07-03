@@ -1,0 +1,25 @@
+<launch>
+  <arg name="camera1" default="kinect_top"/>
+  <arg name="camera2" default="kinect_front"/>
+  <include file="$(find openni_launch)/launch/openni.launch">
+    <arg name="camera" value="$(arg camera1)" />
+    <arg name="device_id" value="A00363807157051A" />
+    <arg name="depth_registration" value="true" />
+    <arg name="publish_tf" value="false" />
+  </include>
+  <node name="$(arg camera1)_image" pkg="image_view" type="image_view" output="screen">
+    <remap from="image" to="/$(arg camera1)/rgb/image_rect" />
+  </node>
+
+  <include file="$(find openni_launch)/launch/openni.launch">
+    <arg name="camera" value="$(arg camera2)" />
+    <arg name="device_id" value="A00366A10885046A" />
+    <arg name="depth_registration" value="true" />
+    <arg name="publish_tf" value="false" />
+  </include>  
+  <node name="$(arg camera2)_image" pkg="image_view" type="image_view" output="screen">
+    <remap from="image" to="/$(arg camera2)/rgb/image_rect" />
+  </node>  
+
+</launch>
+
