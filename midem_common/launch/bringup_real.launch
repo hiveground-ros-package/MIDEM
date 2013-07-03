@@ -8,9 +8,9 @@
   <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen"/>        
   <node pkg="denso_rc7m_controller" type="denso_rc7m_controller" name="midem_node" output="screen">
     <rosparam>
-      realtime: false
+      realtime: true
       prefix: ""
-      simulate: true
+      simulate: false
       ip: "10.0.0.101"
       port: "5007"
       Joint1Controller:
