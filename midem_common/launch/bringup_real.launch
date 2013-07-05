@@ -1,24 +1,29 @@
-<launch>	
-  <rosparam>
-    JointStateController:
-      type: joint_state_controller/JointStateController
-      publish_rate: 100
-  </rosparam>
-  <param name="robot_description" textfile="$(find midem_description)/urdf/midem.urdf"/>   
-  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen"/>        
-  <node pkg="denso_rc7m_controller" type="denso_rc7m_controller" name="midem_node" output="screen">
+<launch>
+  <param name="robot_description" textfile="$(find midem_description)/urdf/midem.urdf"/>
+
+  <node ns="midem" pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen">
+    <remap from="joint_states" to="/midem/joint_states" />
+  </node>
+
+  <!-- Robot controller -->
+  <node ns="midem" pkg="denso_rc7m_controller" type="denso_rc7m_controller" name="rc7m_controller" output="screen">
     <rosparam>
-      realtime: true
-      prefix: ""
-      simulate: false
-      ip: "10.0.0.101"
+      realtime: true 
+      prefix: "" 
+      simulate: false 
+      ip: "10.0.0.101" 
       port: "5007"
-      Joint1Controller:
-        type: position_controllers/JointPositionController
-        joint: joint1
-      PTPController:
-        type: hiveground_controllers/PTPFollowJointTrajectoryController
-        joints: [joint1, joint2, joint3, joint4, joint5, joint6]
     </rosparam>
   </node>
+
+  <!-- Load joint controller configurations from YAML file to parameter server -->
+  <rosparam file="$(find midem_common)/config/midem_ros_control.yaml" command="load"/>
+    
+  
+  <!-- load the controllers -->
+  <node ns="midem" name="controller_spawner" pkg="controller_manager" type="spawner"
+    respawn="false" output="screen" args="--namespace=/midem 
+          joint_state_controller
+          ptp_controller"/>
+  
 </launch>

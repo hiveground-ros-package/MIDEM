@@ -164,19 +164,53 @@ Visualization Manager:
             Show Trail: false
             Value: true
         Robot Alpha: 0.5
-        Show Scene Robot: true
+        Show Scene Robot: false
       Value: true
     - Alpha: 1
       Class: rviz/RobotModel
       Collision Enabled: false
-      Enabled: false
+      Enabled: true
       Links:
-        {}
+        base_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        link1:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        link2:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        link3:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        link4:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        link5:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        link6:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
       Name: RobotModel
       Robot Description: robot_description
       TF Prefix: ""
       Update Interval: 0
-      Value: false
+      Value: true
       Visual Enabled: true
     - Class: rviz/InteractiveMarkers
       Enable Transparency: true
@@ -254,51 +288,7 @@ Visualization Manager:
       Enabled: true
       Frame Timeout: 15
       Frames:
-        /ankle_left_1:
-          Value: true
-        /ankle_right_1:
-          Value: true
         /base_link:
-          Value: true
-        /elbow_left_1:
-          Value: true
-        /elbow_right_1:
-          Value: true
-        /foot_left_1:
-          Value: true
-        /foot_right_1:
-          Value: true
-        /hand_left_1:
-          Value: true
-        /hand_right_1:
-          Value: true
-        /head_1:
-          Value: true
-        /hip_center_1:
-          Value: true
-        /hip_left_1:
-          Value: true
-        /hip_right_1:
-          Value: true
-        /kinect_front_depth_frame:
-          Value: true
-        /kinect_front_depth_optical_frame:
-          Value: true
-        /kinect_front_rgb_frame:
-          Value: true
-        /kinect_front_rgb_optical_frame:
-          Value: true
-        /kinect_top_depth_frame:
-          Value: true
-        /kinect_top_depth_optical_frame:
-          Value: true
-        /kinect_top_rgb_frame:
-          Value: true
-        /kinect_top_rgb_optical_frame:
-          Value: true
-        /knee_left_1:
-          Value: true
-        /knee_right_1:
           Value: true
         /link1:
           Value: true
@@ -311,16 +301,6 @@ Visualization Manager:
         /link5:
           Value: true
         /link6:
-          Value: true
-        /shoulder_center_1:
-          Value: true
-        /shoulder_left_1:
-          Value: true
-        /shoulder_right_1:
-          Value: true
-        /spine_1:
-          Value: true
-        /table:
           Value: true
         /tool0:
           Value: true
@@ -343,54 +323,6 @@ Visualization Manager:
                       /link6:
                         /tool0:
                           {}
-            /table:
-              /kinect_top_rgb_optical_frame:
-                /kinect_front_rgb_optical_frame:
-                  /kinect_front_depth_optical_frame:
-                    /kinect_front_depth_frame:
-                      /ankle_left_1:
-                        {}
-                      /ankle_right_1:
-                        {}
-                      /elbow_left_1:
-                        {}
-                      /elbow_right_1:
-                        {}
-                      /foot_left_1:
-                        {}
-                      /foot_right_1:
-                        {}
-                      /hand_left_1:
-                        {}
-                      /hand_right_1:
-                        {}
-                      /head_1:
-                        {}
-                      /hip_center_1:
-                        {}
-                      /hip_left_1:
-                        {}
-                      /hip_right_1:
-                        {}
-                      /knee_left_1:
-                        {}
-                      /knee_right_1:
-                        {}
-                      /shoulder_center_1:
-                        {}
-                      /shoulder_left_1:
-                        {}
-                      /shoulder_right_1:
-                        {}
-                      /spine_1:
-                        {}
-                  /kinect_front_rgb_frame:
-                    {}
-                /kinect_top_depth_optical_frame:
-                  /kinect_top_depth_frame:
-                    {}
-                /kinect_top_rgb_frame:
-                  {}
       Update Interval: 0
       Value: true
   Enabled: true
@@ -407,17 +339,17 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/XYOrbit
-      Distance: 1.55029
+      Distance: 1.94468
       Focal Point:
         X: -0.0473016
         Y: 0.0571384
         Z: -4.21671e-07
       Name: Current View
       Near Clip Distance: 0.01
-      Pitch: 0.800208
+      Pitch: 0.520208
       Target Frame: /base_link
       Value: XYOrbit (rviz)
-      Yaw: 0.977265
+      Yaw: 5.65045
     Saved: ~
 Window Geometry:
   Displays:
@@ -433,5 +365,5 @@ Window Geometry:
   Views:
     collapsed: false
   Width: 1871
-  X: 41
-  Y: -4
+  X: 148
+  Y: 154

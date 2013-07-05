@@ -1,0 +1,8 @@
+midem:  
+  joint_state_controller:
+    type: joint_state_controller/JointStateController
+    publish_rate: 100
+  ptp_controller:
+    type: hiveground_controllers/PTPFollowJointTrajectoryController
+    joints: [joint1, joint2, joint3, joint4, joint5, joint6]
+  

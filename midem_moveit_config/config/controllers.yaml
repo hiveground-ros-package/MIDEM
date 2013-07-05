@@ -1,6 +1,6 @@
 controller_manager_ns: controller_manager
 controller_list:
-  - name: midem_node/PTPController
+  - name: midem/ptp_controller
     ns: ptp_follow_joint_trajectory
     default: true
     joints: [joint1, joint2, joint3, joint4, joint5, joint6]
