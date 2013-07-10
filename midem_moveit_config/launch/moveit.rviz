@@ -14,6 +14,7 @@ Panels:
         - /TF_frame1/Frames1
         - /TF_frame1/Tree1
         - /PointCloud21
+        - /PointCloud21/Status1
       Splitter Ratio: 0.742378
     Tree Height: 447
   - Class: rviz/Help
@@ -284,19 +285,321 @@ Visualization Manager:
       Reference Frame: <Fixed Frame>
       Value: false
     - Class: rviz/TF
-      Enabled: false
-      Frame Timeout: 15
+      Enabled: true
+      Frame Timeout: 1
       Frames:
+        /base_link:
+          Value: true
+        /hand0:
+          Value: true
+        /hand1:
+          Value: true
+        /hand10:
+          Value: true
+        /hand11:
+          Value: true
+        /hand12:
+          Value: true
+        /hand13:
+          Value: true
+        /hand14:
+          Value: true
+        /hand15:
+          Value: true
+        /hand16:
+          Value: true
+        /hand17:
+          Value: true
+        /hand18:
+          Value: true
+        /hand19:
+          Value: true
+        /hand2:
+          Value: true
+        /hand20:
+          Value: true
+        /hand21:
+          Value: true
+        /hand22:
+          Value: true
+        /hand23:
+          Value: true
+        /hand24:
+          Value: true
+        /hand25:
+          Value: true
+        /hand26:
+          Value: true
+        /hand27:
+          Value: true
+        /hand28:
+          Value: true
+        /hand29:
+          Value: true
+        /hand3:
+          Value: true
+        /hand30:
+          Value: true
+        /hand31:
+          Value: true
+        /hand32:
+          Value: true
+        /hand33:
+          Value: true
+        /hand34:
+          Value: true
+        /hand35:
+          Value: true
+        /hand36:
+          Value: true
+        /hand37:
+          Value: true
+        /hand38:
+          Value: true
+        /hand39:
+          Value: true
+        /hand4:
+          Value: true
+        /hand40:
+          Value: true
+        /hand41:
+          Value: true
+        /hand42:
+          Value: true
+        /hand43:
+          Value: true
+        /hand44:
+          Value: true
+        /hand45:
+          Value: true
+        /hand46:
+          Value: true
+        /hand47:
+          Value: true
+        /hand48:
+          Value: true
+        /hand49:
+          Value: true
+        /hand5:
+          Value: true
+        /hand50:
+          Value: true
+        /hand51:
+          Value: true
+        /hand52:
+          Value: true
+        /hand53:
+          Value: true
+        /hand54:
+          Value: true
+        /hand55:
+          Value: true
+        /hand56:
+          Value: true
+        /hand57:
+          Value: true
+        /hand58:
+          Value: true
+        /hand59:
+          Value: true
+        /hand6:
+          Value: true
+        /hand60:
+          Value: true
+        /hand7:
+          Value: true
+        /hand8:
+          Value: true
+        /hand9:
+          Value: true
+        /kinect_front_depth_frame:
+          Value: true
+        /kinect_front_depth_optical_frame:
+          Value: true
+        /kinect_front_rgb_frame:
+          Value: true
+        /kinect_front_rgb_optical_frame:
+          Value: true
+        /kinect_top_depth_frame:
+          Value: true
+        /kinect_top_depth_optical_frame:
+          Value: true
+        /kinect_top_rgb_frame:
+          Value: true
+        /kinect_top_rgb_optical_frame:
+          Value: true
+        /link1:
+          Value: true
+        /link2:
+          Value: true
+        /link3:
+          Value: true
+        /link4:
+          Value: true
+        /link5:
+          Value: true
+        /link6:
+          Value: true
+        /table:
+          Value: true
+        /tool0:
+          Value: true
+        /world:
+          Value: true
         All Enabled: false
       Marker Scale: 0.5
       Name: TF_frame
       Show Arrows: true
       Show Axes: true
-      Show Names: false
+      Show Names: true
       Tree:
-        {}
+        /world:
+          /base_link:
+            /link1:
+              /link2:
+                /link3:
+                  /link4:
+                    /link5:
+                      /link6:
+                        /tool0:
+                          {}
+            /table:
+              /kinect_top_rgb_optical_frame:
+                /kinect_front_rgb_optical_frame:
+                  /kinect_front_depth_optical_frame:
+                    /kinect_front_depth_frame:
+                      {}
+                  /kinect_front_rgb_frame:
+                    {}
+                /kinect_top_depth_optical_frame:
+                  /kinect_top_depth_frame:
+                    {}
+                /kinect_top_rgb_frame:
+                  {}
+          /hand0:
+            {}
+          /hand1:
+            {}
+          /hand10:
+            {}
+          /hand11:
+            {}
+          /hand12:
+            {}
+          /hand13:
+            {}
+          /hand14:
+            {}
+          /hand15:
+            {}
+          /hand16:
+            {}
+          /hand17:
+            {}
+          /hand18:
+            {}
+          /hand19:
+            {}
+          /hand2:
+            {}
+          /hand20:
+            {}
+          /hand21:
+            {}
+          /hand22:
+            {}
+          /hand23:
+            {}
+          /hand24:
+            {}
+          /hand25:
+            {}
+          /hand26:
+            {}
+          /hand27:
+            {}
+          /hand28:
+            {}
+          /hand29:
+            {}
+          /hand3:
+            {}
+          /hand30:
+            {}
+          /hand31:
+            {}
+          /hand32:
+            {}
+          /hand33:
+            {}
+          /hand34:
+            {}
+          /hand35:
+            {}
+          /hand36:
+            {}
+          /hand37:
+            {}
+          /hand38:
+            {}
+          /hand39:
+            {}
+          /hand4:
+            {}
+          /hand40:
+            {}
+          /hand41:
+            {}
+          /hand42:
+            {}
+          /hand43:
+            {}
+          /hand44:
+            {}
+          /hand45:
+            {}
+          /hand46:
+            {}
+          /hand47:
+            {}
+          /hand48:
+            {}
+          /hand49:
+            {}
+          /hand5:
+            {}
+          /hand50:
+            {}
+          /hand51:
+            {}
+          /hand52:
+            {}
+          /hand53:
+            {}
+          /hand54:
+            {}
+          /hand55:
+            {}
+          /hand56:
+            {}
+          /hand57:
+            {}
+          /hand58:
+            {}
+          /hand59:
+            {}
+          /hand6:
+            {}
+          /hand60:
+            {}
+          /hand7:
+            {}
+          /hand8:
+            {}
+          /hand9:
+            {}
       Update Interval: 0
-      Value: false
+      Value: true
     - Class: rviz/MarkerArray
       Enabled: true
       Marker Topic: /pcl_hand_arm_detector/hand_arm_markers
@@ -331,7 +634,7 @@ Visualization Manager:
       Size (Pixels): 3
       Size (m): 0.005
       Style: Squares
-      Topic: /pcl_hand_arm_detector/cloud_output
+      Topic: /kinect_top/depth/points
       Use Fixed Frame: true
       Use rainbow: true
       Value: true
@@ -349,31 +652,31 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/XYOrbit
-      Distance: 2.6835
+      Distance: 1.82873
       Focal Point:
         X: 0.67325
         Y: -0.0525301
         Z: 1.74375e-07
       Name: Current View
       Near Clip Distance: 0.01
-      Pitch: 0.5898
+      Pitch: 0.564796
       Target Frame: /base_link
       Value: XYOrbit (rviz)
-      Yaw: 1.82726
+      Yaw: 0.502257
     Saved: ~
 Window Geometry:
   Displays:
-    collapsed: true
-  Height: 1148
+    collapsed: false
+  Height: 1138
   Help:
     collapsed: false
-  Hide Left Dock: true
+  Hide Left Dock: false
   Hide Right Dock: true
   Motion Planning:
-    collapsed: true
-  QMainWindow State: 000000ff00000000fd0000000100000000000002a200000436fc0200000005fb000000100044006900730070006c006100790073000000002800000200000000dd00fffffffb0000000800480065006c00700000000342000000bb0000007600fffffffb0000000a0056006900650077007300000003b0000000b0000000b000fffffffb0000000c00430061006d00650072006100000002ff000001610000000000000000fb0000001e004d006f00740069006f006e00200050006c0061006e006e0069006e0067000000022e000002300000017400ffffff000003a70000043600000001000000020000000100000002fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+    collapsed: false
+  QMainWindow State: 000000ff00000000fd0000000100000000000002a20000042cfc0200000005fb000000100044006900730070006c006100790073010000002800000200000000dd00fffffffb0000000800480065006c00700000000342000000bb0000007600fffffffb0000000a0056006900650077007300000003b0000000b0000000b000fffffffb0000000c00430061006d00650072006100000002ff000001610000000000000000fb0000001e004d006f00740069006f006e00200050006c0061006e006e0069006e0067010000022e000002260000017400ffffff000003f60000042c00000001000000020000000100000002fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Views:
     collapsed: false
-  Width: 935
-  X: 977
-  Y: 24
+  Width: 1694
+  X: 218
+  Y: 5
