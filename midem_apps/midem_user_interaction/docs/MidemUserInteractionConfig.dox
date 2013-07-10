@@ -1,0 +1,6 @@
+\subsubsection parameters ROS parameters
+
+Reads and maintains the following parameters on the ROS server
+
+- \b "~min_x" : \b [double] area x baundary min: -5.0, default: -1.0, max: 5.0
+

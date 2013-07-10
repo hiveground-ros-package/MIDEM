@@ -1,0 +1,7 @@
+\subsubsection usage Usage
+\verbatim
+<node name="midem_user_interaction" pkg="midem_user_interaction" type="midem_user_interaction">
+  <param name="min_x" type="double" value="-1.0" />
+</node>
+\endverbatim
+

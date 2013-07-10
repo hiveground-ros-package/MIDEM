@@ -1,0 +1,24 @@
+<package>
+  <name>midem_user_interaction</name>
+  <version>0.1.0</version>
+  <description>midem_user_interaction</description>
+  <maintainer email="mahisorn.w@gmail.com">Mahisorn Wongphati</maintainer>
+
+  <license>BSD</license>
+
+  <author>Mahisorn Wongphati</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>roscpp</build_depend> 
+  <run_depend>roscpp</run_depend>
+  <build_depend>dynamic_reconfigure</build_depend> 
+  <run_depend>dynamic_reconfigure</run_depend>
+  <build_depend>sensor_msgs</build_depend> 
+  <run_depend>sensor_msgs</run_depend>
+  <build_depend>interaction_msgs</build_depend>
+  <run_depend>interaction_msgs</run_depend>
+  <build_depend>kinect_msgs</build_depend>
+  <run_depend>kinect_msgs</run_depend>
+
+  
+</package>
