@@ -31,44 +31,25 @@
  */
 
 
-#include <ros/ros.h>
-#include <QtGui/QApplication>
-#include <midem_user_interaction/midem_user_interaction.h>
-#include <boost/thread.hpp>
+#ifndef HG_HAND_GESTURE_DETECTOR
+#define HG_HAND_GESTURE_DETECTOR
 
+#include "gesture_detector.h"
+#include <interaction_msgs/Arms.h>
 
-MidemUserInteraction* g_app = NULL;
-bool g_initialized = false;
-
-void spin_function()
+namespace hg_gesture_detector
 {
-  ros::WallRate r(100.0);
-  while (ros::ok() && !g_initialized)
-  {
-    r.sleep();
-    ros::spinOnce();
-  }
-  while (ros::ok() && !g_app->isQuit())
-  {
-    r.sleep();
-    ros::spinOnce();
-  }
+
+class HandGestureDetector : public GestureDetector
+{
+public:
+  virtual ~HandGestureDetector() { }
+  virtual void addMessage(const interaction_msgs::Arms& arms_msg) = 0;
+
+protected:
+  HandGestureDetector() { }
+};
+
 }
 
-int main(int argc, char *argv[])
-{
-  ros::init(argc, argv, "midem_user_interaction", ros::init_options::NoSigintHandler);
-  boost::thread spin_thread(boost::bind(&spin_function));
-
-  QApplication a(argc, argv);
-  MidemUserInteraction app;
-  g_app = & app;
-  app.show();
-
-  g_initialized = true;
-  int ret = a.exec();
-
-  spin_thread.join();
-
-  return ret;
-}
+#endif //HG_HAND_GESTURE_DETECTOR

@@ -1,0 +1,6 @@
+<launch>
+  <node pkg="midem_user_interaction" type="midem_user_interaction" name="midem_user_interaction"  output="screen">
+    <remap from="arms_msg" to="/pcl_hand_arm_detector/arms_output"/>
+    <remap from="skeletons_msg" to="/kinect_server/skeletons"/>      
+  </node>
+</launch>

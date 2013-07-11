@@ -30,45 +30,26 @@
  *
  */
 
-
 #include <ros/ros.h>
-#include <QtGui/QApplication>
-#include <midem_user_interaction/midem_user_interaction.h>
-#include <boost/thread.hpp>
+#include <pluginlib/class_list_macros.h>
 
+#include <gesture_detector/rubber_band_hand_gesture_detector.h>
 
-MidemUserInteraction* g_app = NULL;
-bool g_initialized = false;
+PLUGINLIB_EXPORT_CLASS(hg_gesture_detector::RubberBandHandGestureDetector,hg_gesture_detector::GestureDetector)
 
-void spin_function()
+using namespace hg_gesture_detector;
+
+void RubberBandHandGestureDetector::addMessage(const interaction_msgs::Arms& arms_msg)
 {
-  ros::WallRate r(100.0);
-  while (ros::ok() && !g_initialized)
-  {
-    r.sleep();
-    ros::spinOnce();
-  }
-  while (ros::ok() && !g_app->isQuit())
-  {
-    r.sleep();
-    ros::spinOnce();
-  }
+  ROS_INFO(__FUNCTION__);
 }
 
-int main(int argc, char *argv[])
+void RubberBandHandGestureDetector::addMarker(visualization_msgs::MarkerArray& marker_array)
 {
-  ros::init(argc, argv, "midem_user_interaction", ros::init_options::NoSigintHandler);
-  boost::thread spin_thread(boost::bind(&spin_function));
+  ROS_INFO(__FUNCTION__);
+}
 
-  QApplication a(argc, argv);
-  MidemUserInteraction app;
-  g_app = & app;
-  app.show();
-
-  g_initialized = true;
-  int ret = a.exec();
-
-  spin_thread.join();
-
-  return ret;
+void RubberBandHandGestureDetector::lookForGesture(interaction_msgs::Gestures& gestures)
+{
+  ROS_INFO(__FUNCTION__);
 }
