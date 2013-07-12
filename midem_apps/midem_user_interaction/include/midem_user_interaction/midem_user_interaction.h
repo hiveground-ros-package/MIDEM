@@ -113,7 +113,8 @@ private:
   ros::Publisher markers_pub_;
 
 
-
+  typedef std::map<std::string, boost::shared_ptr<hg_gesture_detector::GestureDetector> > GestureDetectorMap;
+  GestureDetectorMap gesture_detector_map_;
 };
 
 #endif // MIDEM_USER_INTERACTION_H

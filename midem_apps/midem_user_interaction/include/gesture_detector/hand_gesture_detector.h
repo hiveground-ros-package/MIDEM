@@ -44,7 +44,7 @@ class HandGestureDetector : public GestureDetector
 {
 public:
   virtual ~HandGestureDetector() { }
-  virtual void addMessage(const interaction_msgs::Arms& arms_msg) = 0;
+  virtual void addMessage(const interaction_msgs::ArmsPtr& msg) = 0;
 
 protected:
   HandGestureDetector() { }

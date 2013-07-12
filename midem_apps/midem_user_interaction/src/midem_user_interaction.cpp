@@ -42,7 +42,7 @@ MidemUserInteraction::MidemUserInteraction(QMainWindow *parent) :
   ui(new Ui::MidemUserInteraction),
   quit_thread_(false),
   nhp_("~"),
-  working_frame_("base_link"),
+  working_frame_("/base_link"),
   gesture_detector_loader_("midem_user_interaction","hg_gesture_detector::GestureDetector")
 {
   ui->setupUi(this);
@@ -63,42 +63,44 @@ MidemUserInteraction::MidemUserInteraction(QMainWindow *parent) :
 
   markers_pub_ = nhp_.advertise<visualization_msgs::MarkerArray>("markers", 1);
 
-
-
-  boost::shared_ptr<hg_gesture_detector::GestureDetector> p;
-  try
+  XmlRpc::XmlRpcValue gesture_detector;
+  nhp_.getParam("gesture_detector", gesture_detector);
+  if(gesture_detector.getType() != XmlRpc::XmlRpcValue::TypeStruct)
   {
-    p = gesture_detector_loader_.createInstance("hg_gesture_detector::RubberBandHandGestureDetector");
-    p->addMarker(marker_array_);
-    interaction_msgs::Gestures gestures;
-    p->lookForGesture(gestures);
+    ROS_ERROR("invalid YAML structure");
+    return;
+  }
 
-    boost::shared_ptr<hg_gesture_detector::HandGestureDetector> hand_detector = boost::dynamic_pointer_cast<hg_gesture_detector::HandGestureDetector>(p);
-    if(hand_detector)
+  ROS_INFO_STREAM("load " << gesture_detector.size() << " gesture detector(s)");
+  for(XmlRpc::XmlRpcValue::iterator it = gesture_detector.begin(); it != gesture_detector.end(); it++)
+  {
+    ROS_INFO_STREAM("detector name: " << it->first);
+    XmlRpc::XmlRpcValue detector;
+    nhp_.getParam("gesture_detector/" + it->first, detector);
+    if(detector.getType() != XmlRpc::XmlRpcValue::TypeStruct)
     {
-      ROS_INFO("hand");
-    }
-    else
-    {
-      ROS_INFO("convert to hand failed!");
+      ROS_ERROR("invalid YAML structure");
+      return;
     }
 
-    boost::shared_ptr<hg_gesture_detector::SkelentonGestureDetector> skeleton_detector = boost::dynamic_pointer_cast<hg_gesture_detector::SkelentonGestureDetector>(p);
-    if(skeleton_detector)
+    if(detector.begin()->first != "type")
     {
-      ROS_INFO("skeleton");
+      ROS_ERROR("invalid YAML structure");
+      return;
     }
-    else
+
+    ROS_INFO_STREAM("         type: " << detector.begin()->second);
+    try
     {
-      ROS_INFO("convert to skeletion failed!");
+      gesture_detector_map_[it->first] = gesture_detector_loader_.createInstance(detector.begin()->second);
+      gesture_detector_map_[it->first]->setName(it->first);
+    }
+    catch(pluginlib::PluginlibException& ex)
+    {
+      ROS_ERROR("The plugin failed to load for some reason. Error: %s", ex.what());
     }
 
   }
-  catch(pluginlib::PluginlibException& ex)
-  {
-    ROS_ERROR("The plugin failed to load for some reason. Error: %s", ex.what());
-  }
-
 }
 
 MidemUserInteraction::~MidemUserInteraction()
@@ -112,23 +114,27 @@ void MidemUserInteraction::callbackConfig(midem_user_interaction::MidemUserInter
 }
 
 void MidemUserInteraction::callbackArms(const interaction_msgs::ArmsConstPtr &msg)
-{  
+{
   if(msg->arms.size() == 0)
     return;
-  std::vector<tf::Transform> hand_transforms(msg->arms.size());
-  for(size_t i = 0; i < i < msg->arms.size(); i++)
+
+  interaction_msgs::ArmsPtr arm_msgs(new interaction_msgs::Arms);
+  *arm_msgs = *msg;
+
+  std::vector<tf::Transform> hand_transforms(arm_msgs->arms.size());
+  for(size_t i = 0; i < arm_msgs->arms.size(); i++)
   {
-    tf::transformMsgToTF(msg->arms[i].hand, hand_transforms[i]);
+    tf::transformMsgToTF(arm_msgs->arms[i].hand, hand_transforms[i]);
   }
 
   //ROS_INFO_THROTTLE(1.0, "Arm %s %s", msg->header.frame_id.c_str(), working_frame_.c_str());
-  if(msg->header.frame_id != working_frame_)
+  if(arm_msgs->header.frame_id != working_frame_)
   {
 
     tf::StampedTransform stf;
     try
     {
-      tf_listener_.lookupTransform("base_link", msg->header.frame_id, ros::Time::now(), stf);
+      tf_listener_.lookupTransform(working_frame_, arm_msgs->header.frame_id, ros::Time::now(), stf);
     }
     catch (tf::TransformException ex)
     {
@@ -137,15 +143,22 @@ void MidemUserInteraction::callbackArms(const interaction_msgs::ArmsConstPtr &ms
     }
 
     //transform position
-    for(size_t i = 0; i < i < hand_transforms.size(); i++)
+    for(size_t i = 0; i < hand_transforms.size(); i++)
     {
-      hand_transforms[i] = hand_transforms[i] * stf;
+      hand_transforms[i] = stf * hand_transforms[i];
+      tf::transformTFToMsg(hand_transforms[i], arm_msgs->arms[i].hand);
     }
   }
 
-
-
-
+  GestureDetectorMap::iterator it;
+  for(it = gesture_detector_map_.begin(); it != gesture_detector_map_.end(); it++)
+  {
+    boost::shared_ptr<hg_gesture_detector::HandGestureDetector> hand_detector = boost::dynamic_pointer_cast<hg_gesture_detector::HandGestureDetector>(it->second);
+    if(hand_detector)
+    {
+      hand_detector->addMessage(arm_msgs);
+    }
+  }
 }
 
 void MidemUserInteraction::callbackSkeletons(const kinect_msgs::SkeletonsConstPtr& msg)

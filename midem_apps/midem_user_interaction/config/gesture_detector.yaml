@@ -1,0 +1,5 @@
+midem_user_interaction:
+  gesture_detector:
+    rubber_band_hand_gesture_detector:
+      type: hg_gesture_detector::RubberBandHandGestureDetector
+

@@ -48,6 +48,7 @@ public:
   void setName(const std::string& name) { name_ = name; }
   std::string getName() { return name_; }
 
+  virtual bool initialize() = 0;
   virtual void addMarker(visualization_msgs::MarkerArray& marker_array) = 0;
   virtual void lookForGesture(interaction_msgs::Gestures& gestures) = 0;
 

@@ -30,7 +30,7 @@
         filter_limit_max: 1.6  
         filter_limit_negative: False
         leaf_size: 0.01         
-        output_frame: base_link
+        output_frame: /base_link
       </rosparam>
     </node>   
 
@@ -71,7 +71,7 @@
         filter_limit_max: 1.6  
         filter_limit_negative: False
         leaf_size: 0.01  
-        output_frame: base_link
+        output_frame: /base_link
       </rosparam>
     </node>
   </group>

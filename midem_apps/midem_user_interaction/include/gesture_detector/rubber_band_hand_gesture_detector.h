@@ -42,7 +42,8 @@ namespace hg_gesture_detector
 class RubberBandHandGestureDetector : public HandGestureDetector
 {
 public:
-  void addMessage(const interaction_msgs::Arms& arms_msg);
+  bool initialize();
+  void addMessage(const interaction_msgs::ArmsPtr& msg);
   void addMarker(visualization_msgs::MarkerArray& marker_array);
   void lookForGesture(interaction_msgs::Gestures& gestures);
 };

@@ -32,6 +32,7 @@
 
 #include <ros/ros.h>
 #include <pluginlib/class_list_macros.h>
+#include <tf/tf.h>
 
 #include <gesture_detector/rubber_band_hand_gesture_detector.h>
 
@@ -39,7 +40,12 @@ PLUGINLIB_EXPORT_CLASS(hg_gesture_detector::RubberBandHandGestureDetector,hg_ges
 
 using namespace hg_gesture_detector;
 
-void RubberBandHandGestureDetector::addMessage(const interaction_msgs::Arms& arms_msg)
+bool RubberBandHandGestureDetector::initialize()
+{  
+  return true;
+}
+
+void RubberBandHandGestureDetector::addMessage(const interaction_msgs::ArmsPtr& msg)
 {
   ROS_INFO(__FUNCTION__);
 }
