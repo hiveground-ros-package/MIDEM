@@ -92,18 +92,20 @@ private:
   std::string working_frame_;
   pluginlib::ClassLoader<hg_gesture_detector::GestureDetector> gesture_detector_loader_;
 
-  ros::Publisher arm_gestuer_markers_pub_;
+  ros::Publisher arm_gesture_markers_pub_;
+  ros::Publisher arm_gesture_pub_;
 
-
+  ros::Publisher skeleton_gesture_markers_pub_;
+  ros::Publisher skeleton_gesture_pub_;
 
   tf::TransformListener tf_listener_;
 
   dynamic_reconfigure::Server<midem_user_interaction::MidemUserInteractionConfig> reconfigure_server_;
   ros::Subscriber arms_sub_;
-  ros::Publisher arm_joy_pub_;
+
 
   ros::Subscriber skeletons_sub_;
-  ros::Publisher skeleton_joy_pub_;
+
 
   message_filters::Subscriber<interaction_msgs::Arms> arms_syn_sub_;
   message_filters::Subscriber<kinect_msgs::Skeletons> skeletons_syn_sub_;

@@ -52,6 +52,17 @@ public:
     LEAVING
   };
 
+  enum
+  {
+    UNKNOW,
+    UP,
+    DOWN,
+    LEFT,
+    RIGHT,
+    FORWARD,
+    BACKWARD
+  };
+
   struct HandState
   {
     HandState()
@@ -76,12 +87,14 @@ public:
 
 protected:
   int closetHandIndex(const tf::Vector3 point, const std::vector<tf::Vector3>& hand_positions);
+  int checkDirection(const tf::Vector3& vec_to_hand);
 
 protected:
   int last_hand_count_;
   std::vector<HandState> hand_states_;
   double r_activating_, r_activated_, r_leaving_, r_die_;
   double activating_time_;
+
 
 };
 

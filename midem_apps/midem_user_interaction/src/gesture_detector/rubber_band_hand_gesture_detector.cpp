@@ -158,9 +158,10 @@ void RubberBandHandGestureDetector::getMarkers(visualization_msgs::MarkerArray& 
 
 void RubberBandHandGestureDetector::lookForGesture(interaction_msgs::Gestures& gestures)
 {
+  std::vector<int> directions(hand_states_.size(), UNKNOW);
   for(size_t i = 0; i < hand_states_.size(); i++)
   {
-    tf::Vector3 vec_to_hand = hand_states_[i].pivot_position - hand_states_[i].last_hand_position;
+    tf::Vector3 vec_to_hand = hand_states_[i].last_hand_position - hand_states_[i].pivot_position;
     double distance = vec_to_hand.length();
     switch(hand_states_[i].state)
     {
@@ -214,6 +215,67 @@ void RubberBandHandGestureDetector::lookForGesture(interaction_msgs::Gestures& g
         }
         break;
     }
+
+    if(hand_states_[i].state == MOVING)
+    {
+      std::stringstream ss;
+      interaction_msgs::Gesture gesture;
+      directions[i] = checkDirection(vec_to_hand);
+      switch(directions[i])
+      {
+        case UP: ss << "RUBBER_BAND_" << i << "_UP"; break;
+        case DOWN: ss << "RUBBER_BAND_" << i << "_DOWN"; break;
+        case LEFT: ss << "RUBBER_BAND_" << i << "_LEFT"; break;
+        case RIGHT: ss << "RUBBER_BAND_" << i << "_RIGHT"; break;
+        case FORWARD: ss << "RUBBER_BAND_" << i << "_FORWARD"; break;
+        case BACKWARD: ss << "RUBBER_BAND_" << i << "_BACKWARD"; break;
+      }
+      ROS_DEBUG_STREAM(ss.str());
+      gesture.name = ss.str();
+      gestures.gestures.push_back(gesture);
+    }
+  }
+
+  if(hand_states_.size() == 2)
+  {
+    int dir_left, dir_right;
+    if(hand_states_[0].pivot_position.getY() < hand_states_[1].pivot_position.getY())
+    {
+      dir_left = directions[0]; dir_right = directions[1];
+    }
+    else
+    {
+      dir_left = directions[1]; dir_right = directions[0];
+    }
+    interaction_msgs::Gesture gesture;
+    switch(dir_left)
+    {
+      case UP:
+        if(dir_right == DOWN)
+          gesture.name = "RUBBER_BAND_ROTATE_X-";
+        break;
+      case DOWN:
+        if(dir_right == UP)
+          gesture.name = "RUBBER_BAND_ROTATE_X+";
+        break;
+      case FORWARD:
+        if(dir_right == FORWARD)
+          gesture.name = "RUBBER_BAND_ROTATE_Y+";
+        else if(dir_right == BACKWARD)
+          gesture.name = "RUBBER_BAND_ROTATE_Z+";
+        break;
+      case BACKWARD:
+        if(dir_right == FORWARD)
+          gesture.name = "RUBBER_BAND_ROTATE_Z-";
+        else if(dir_right == BACKWARD)
+          gesture.name = "RUBBER_BAND_ROTATE_Y-";
+        break;
+    }
+    if(gesture.name.length() != 0)
+    {
+      ROS_DEBUG_STREAM(gesture.name);
+      gestures.gestures.push_back(gesture);
+    }
   }
 }
 
@@ -232,4 +294,71 @@ int RubberBandHandGestureDetector::closetHandIndex(const tf::Vector3 point,
     }
   }
   return index;
+}
+
+int RubberBandHandGestureDetector::checkDirection(const tf::Vector3& vec_to_hand)
+{
+  tf::Vector3 main_axes[3];
+  main_axes[0] = tf::Vector3(1, 0, 0); //X
+  main_axes[1] = tf::Vector3(0, 1, 0); //Y
+  main_axes[2] = tf::Vector3(0, 0, 1); //Z
+
+  double min_error = 1e6;
+  int min_error_index = -1;
+  double dot_products[3];
+  for (int i = 0; i < 3; i++)
+  {
+    dot_products[i] = vec_to_hand.dot(main_axes[i]);
+    if ((1 - fabs(dot_products[i])) < min_error)
+    {
+      min_error = 1 - fabs(dot_products[i]);
+      min_error_index = i;
+    }
+  }
+
+  switch (min_error_index)
+  {
+    case 0:
+      if (dot_products[min_error_index] > 0)
+      {
+        ROS_DEBUG("X+");
+        return FORWARD;
+      }
+      else
+      {
+        ROS_DEBUG("X-");
+        return BACKWARD;
+      }
+      break;
+    case 1:
+      if (dot_products[min_error_index] > 0)
+      {
+        ROS_DEBUG("Y+");
+        return RIGHT;
+      }
+      else
+      {
+        ROS_DEBUG("Y-");
+        return LEFT;
+      }
+      break;
+    case 2:
+      if (dot_products[min_error_index] > 0)
+      {
+        ROS_DEBUG("Z+");
+        return UP;
+      }
+      else
+      {
+        ROS_DEBUG("Z-");
+        return DOWN;
+      }
+      break;
+    default:
+      ROS_ERROR("Something wrong!");
+      return UNKNOW;
+      break;
+  }
+
+
 }

@@ -51,17 +51,17 @@ MidemUserInteraction::MidemUserInteraction(QMainWindow *parent) :
   reconfigure_server_.setCallback(f);
 
   arms_sub_ = nh_.subscribe("arms_msg", 1, &MidemUserInteraction::callbackArms, this);
-  arm_joy_pub_ = nhp_.advertise<sensor_msgs::JointState>("hands_joy", 1);
+  arm_gesture_pub_ = nhp_.advertise<interaction_msgs::Gestures>("arm_gestures", 1);
 
   skeletons_sub_ = nh_.subscribe("skeletons_msg", 1, &MidemUserInteraction::callbackSkeletons, this);
-  skeleton_joy_pub_ = nhp_.advertise<sensor_msgs::JointState>("body_joy", 1);
+  skeleton_gesture_pub_ = nhp_.advertise<interaction_msgs::Gestures>("skeleton_gestures", 1);
 
   arms_syn_sub_.subscribe(nh_, "arms_msg", 10);
   skeletons_syn_sub_.subscribe(nh_, "skeletons_msg", 10);
   arm_skeleton_sync_.reset(new message_filters::Synchronizer<ArmBodyAppoxSyncPolicy>(ArmBodyAppoxSyncPolicy(10), arms_syn_sub_, skeletons_syn_sub_));
   arm_skeleton_sync_->registerCallback(boost::bind(&MidemUserInteraction::callbackArmsSkelentons, this, _1, _2));
 
-  arm_gestuer_markers_pub_ = nhp_.advertise<visualization_msgs::MarkerArray>("arm_gesture_markers", 1);
+  arm_gesture_markers_pub_ = nhp_.advertise<visualization_msgs::MarkerArray>("arm_gesture_markers", 1);
 
   XmlRpc::XmlRpcValue gesture_detector;
   nhp_.getParam("gesture_detector", gesture_detector);
@@ -152,7 +152,7 @@ void MidemUserInteraction::callbackArms(const interaction_msgs::ArmsConstPtr &ms
     }
   }
 
-  interaction_msgs::Gestures gestures_msg;
+  interaction_msgs::Gestures::Ptr gestures_msg(new interaction_msgs::Gestures);
   visualization_msgs::MarkerArray marker_array;
   GestureDetectorMap::iterator it;
   for(it = gesture_detector_map_.begin(); it != gesture_detector_map_.end(); it++)
@@ -161,14 +161,22 @@ void MidemUserInteraction::callbackArms(const interaction_msgs::ArmsConstPtr &ms
     if(hand_detector)
     {
       hand_detector->addMessage(arm_msgs);
-      hand_detector->lookForGesture(gestures_msg);
+      hand_detector->lookForGesture(*gestures_msg);
       hand_detector->getMarkers(marker_array, msg->header.frame_id);
     }
   }
 
-  if(arm_gestuer_markers_pub_.getNumSubscribers() != 0 && marker_array.markers.size() != 0)
+  if(arm_gesture_pub_.getNumSubscribers() != 0)
   {
-    arm_gestuer_markers_pub_.publish(marker_array);
+    gestures_msg->header.stamp = ros::Time::now();
+    gestures_msg->header.frame_id = msg->header.frame_id;
+    arm_gesture_pub_.publish(gestures_msg);
+  }
+
+
+  if(arm_gesture_markers_pub_.getNumSubscribers() != 0 && marker_array.markers.size() != 0)
+  {
+    arm_gesture_markers_pub_.publish(marker_array);
   }
 }
 
