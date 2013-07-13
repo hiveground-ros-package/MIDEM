@@ -49,14 +49,14 @@ public:
   std::string getName() { return name_; }
 
   virtual bool initialize() = 0;
-  virtual void addMarker(visualization_msgs::MarkerArray& marker_array) = 0;
+  virtual void getMarkers(visualization_msgs::MarkerArray& marker_array, const std::string& frame_id) = 0;
   virtual void lookForGesture(interaction_msgs::Gestures& gestures) = 0;
 
 protected:
   GestureDetector() { }
 
 protected:
-  std::string name_;
+  std::string name_;  
 };
 
 }

@@ -92,8 +92,8 @@ private:
   std::string working_frame_;
   pluginlib::ClassLoader<hg_gesture_detector::GestureDetector> gesture_detector_loader_;
 
-  visualization_msgs::MarkerArray marker_array_;
-  int marker_id_;
+  ros::Publisher arm_gestuer_markers_pub_;
+
 
 
   tf::TransformListener tf_listener_;
@@ -110,7 +110,7 @@ private:
   typedef message_filters::sync_policies::ApproximateTime<interaction_msgs::Arms, kinect_msgs::Skeletons> ArmBodyAppoxSyncPolicy;
   boost::shared_ptr<message_filters::Synchronizer<ArmBodyAppoxSyncPolicy> > arm_skeleton_sync_;
 
-  ros::Publisher markers_pub_;
+
 
 
   typedef std::map<std::string, boost::shared_ptr<hg_gesture_detector::GestureDetector> > GestureDetectorMap;

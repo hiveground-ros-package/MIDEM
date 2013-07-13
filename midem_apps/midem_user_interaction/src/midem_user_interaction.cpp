@@ -61,7 +61,7 @@ MidemUserInteraction::MidemUserInteraction(QMainWindow *parent) :
   arm_skeleton_sync_.reset(new message_filters::Synchronizer<ArmBodyAppoxSyncPolicy>(ArmBodyAppoxSyncPolicy(10), arms_syn_sub_, skeletons_syn_sub_));
   arm_skeleton_sync_->registerCallback(boost::bind(&MidemUserInteraction::callbackArmsSkelentons, this, _1, _2));
 
-  markers_pub_ = nhp_.advertise<visualization_msgs::MarkerArray>("markers", 1);
+  arm_gestuer_markers_pub_ = nhp_.advertise<visualization_msgs::MarkerArray>("arm_gesture_markers", 1);
 
   XmlRpc::XmlRpcValue gesture_detector;
   nhp_.getParam("gesture_detector", gesture_detector);
@@ -94,6 +94,11 @@ MidemUserInteraction::MidemUserInteraction(QMainWindow *parent) :
     {
       gesture_detector_map_[it->first] = gesture_detector_loader_.createInstance(detector.begin()->second);
       gesture_detector_map_[it->first]->setName(it->first);
+      if(!gesture_detector_map_[it->first]->initialize())
+      {
+        ROS_ERROR_STREAM("Cannot initialize detector " << it->first);
+        gesture_detector_map_.erase(it->first);
+      }
     }
     catch(pluginlib::PluginlibException& ex)
     {
@@ -115,9 +120,6 @@ void MidemUserInteraction::callbackConfig(midem_user_interaction::MidemUserInter
 
 void MidemUserInteraction::callbackArms(const interaction_msgs::ArmsConstPtr &msg)
 {
-  if(msg->arms.size() == 0)
-    return;
-
   interaction_msgs::ArmsPtr arm_msgs(new interaction_msgs::Arms);
   *arm_msgs = *msg;
 
@@ -150,6 +152,8 @@ void MidemUserInteraction::callbackArms(const interaction_msgs::ArmsConstPtr &ms
     }
   }
 
+  interaction_msgs::Gestures gestures_msg;
+  visualization_msgs::MarkerArray marker_array;
   GestureDetectorMap::iterator it;
   for(it = gesture_detector_map_.begin(); it != gesture_detector_map_.end(); it++)
   {
@@ -157,7 +161,14 @@ void MidemUserInteraction::callbackArms(const interaction_msgs::ArmsConstPtr &ms
     if(hand_detector)
     {
       hand_detector->addMessage(arm_msgs);
+      hand_detector->lookForGesture(gestures_msg);
+      hand_detector->getMarkers(marker_array, msg->header.frame_id);
     }
+  }
+
+  if(arm_gestuer_markers_pub_.getNumSubscribers() != 0 && marker_array.markers.size() != 0)
+  {
+    arm_gestuer_markers_pub_.publish(marker_array);
   }
 }
 
