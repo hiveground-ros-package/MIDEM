@@ -30,26 +30,37 @@
  *
  */
 
+#include <ros/ros.h>
+#include <pluginlib/class_list_macros.h>
+#include <tf/tf.h>
 
-#ifndef HG_SKELENTON_GESTURE_DETECTOR
-#define HG_SKELENTON_GESTURE_DETECTOR
+#include <gesture_detector/rubber_band_skeleton_gesture_detector.h>
 
-#include "gesture_detector.h"
-#include <kinect_msgs/Skeletons.h>
+PLUGINLIB_EXPORT_CLASS(hg_gesture_detector::RubberBandSkeletonGestureDetector,hg_gesture_detector::GestureDetector)
 
-namespace hg_gesture_detector
+using namespace  hg_gesture_detector;
+
+RubberBandSkeletonGestureDetector::RubberBandSkeletonGestureDetector()
 {
-
-class SkelentonGestureDetector : public GestureDetector
-{
-public:
-  virtual ~SkelentonGestureDetector() { }
-  virtual void addMessage(const kinect_msgs::Skeleton& msg) = 0;
-
-protected:
-  SkelentonGestureDetector() { }
-};
 
 }
 
-#endif //HG_SKELENTON_GESTURE_DETECTOR
+bool RubberBandSkeletonGestureDetector::initialize()
+{
+  return true;
+}
+
+void RubberBandSkeletonGestureDetector::addMessage(const kinect_msgs::Skeleton& msg)
+{
+
+}
+
+void RubberBandSkeletonGestureDetector::getMarkers(visualization_msgs::MarkerArray& marker_array, const std::string& frame_id)
+{
+
+}
+
+void RubberBandSkeletonGestureDetector::lookForGesture(interaction_msgs::Gestures& gestures)
+{
+
+}

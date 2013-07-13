@@ -31,25 +31,32 @@
  */
 
 
-#ifndef HG_SKELENTON_GESTURE_DETECTOR
-#define HG_SKELENTON_GESTURE_DETECTOR
+#ifndef HG_RUBBER_BAND_SKELETON_GESTURE_DETECTOR
+#define HG_RUBBER_BAND_SKELETON_GESTURE_DETECTOR
 
-#include "gesture_detector.h"
-#include <kinect_msgs/Skeletons.h>
+#include <tf/tf.h>
+#include "skeleton_gesture_detector.h"
+
 
 namespace hg_gesture_detector
 {
 
-class SkelentonGestureDetector : public GestureDetector
+class RubberBandSkeletonGestureDetector : public SkelentonGestureDetector
 {
 public:
-  virtual ~SkelentonGestureDetector() { }
-  virtual void addMessage(const kinect_msgs::Skeleton& msg) = 0;
+  RubberBandSkeletonGestureDetector();
+  virtual ~RubberBandSkeletonGestureDetector() { }
+
+  bool initialize();
+  void addMessage(const kinect_msgs::Skeleton& msg);
+  void getMarkers(visualization_msgs::MarkerArray& marker_array, const std::string& frame_id);
+  void lookForGesture(interaction_msgs::Gestures& gestures);
 
 protected:
-  SkelentonGestureDetector() { }
+
+
 };
 
 }
 
-#endif //HG_SKELENTON_GESTURE_DETECTOR
+#endif //HG_RUBBER_BAND_SKELETON_GESTURE_DETECTOR

@@ -54,6 +54,7 @@ target_link_libraries(${PROJECT_NAME}
 
 add_library(hg_gesture_detector
   src/gesture_detector/rubber_band_hand_gesture_detector.cpp
+  src/gesture_detector/rubber_band_skeleton_gesture_detector.cpp
 )
 
 

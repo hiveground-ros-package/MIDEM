@@ -123,16 +123,8 @@ void MidemUserInteraction::callbackArms(const interaction_msgs::ArmsConstPtr &ms
   interaction_msgs::ArmsPtr arm_msgs(new interaction_msgs::Arms);
   *arm_msgs = *msg;
 
-  std::vector<tf::Transform> hand_transforms(arm_msgs->arms.size());
-  for(size_t i = 0; i < arm_msgs->arms.size(); i++)
-  {
-    tf::transformMsgToTF(arm_msgs->arms[i].hand, hand_transforms[i]);
-  }
-
-  //ROS_INFO_THROTTLE(1.0, "Arm %s %s", msg->header.frame_id.c_str(), working_frame_.c_str());
   if(arm_msgs->header.frame_id != working_frame_)
   {
-
     tf::StampedTransform stf;
     try
     {
@@ -144,12 +136,17 @@ void MidemUserInteraction::callbackArms(const interaction_msgs::ArmsConstPtr &ms
       return;
     }
 
-    //transform position
-    for(size_t i = 0; i < hand_transforms.size(); i++)
+    //transform position    
+    tf::Transform tf;
+    for(size_t i = 0; i < arm_msgs->arms.size(); i++)
     {
-      hand_transforms[i] = stf * hand_transforms[i];
-      tf::transformTFToMsg(hand_transforms[i], arm_msgs->arms[i].hand);
+      tf::transformMsgToTF(arm_msgs->arms[i].hand, tf);
+      tf = stf * tf;
+      tf::transformTFToMsg(tf, arm_msgs->arms[i].hand);
     }
+
+    //update frame name
+    arm_msgs->header.frame_id = working_frame_;
   }
 
   interaction_msgs::Gestures::Ptr gestures_msg(new interaction_msgs::Gestures);
@@ -182,7 +179,40 @@ void MidemUserInteraction::callbackArms(const interaction_msgs::ArmsConstPtr &ms
 
 void MidemUserInteraction::callbackSkeletons(const kinect_msgs::SkeletonsConstPtr& msg)
 {
-  //ROS_INFO_THROTTLE(1.0, "hoho");
+  kinect_msgs::SkeletonsPtr skeletons_msgs(new kinect_msgs::Skeletons);
+  *skeletons_msgs = *msg;
+  if(skeletons_msgs->header.frame_id != working_frame_)
+  {
+    tf::StampedTransform stf;
+    try
+    {
+      tf_listener_.lookupTransform(working_frame_, skeletons_msgs->header.frame_id, ros::Time::now(), stf);
+    }
+    catch (tf::TransformException ex)
+    {
+      ROS_ERROR("%s",ex.what());
+      return;
+    }
+
+    tf::Transform tf;
+    for(size_t i = 0; i < kinect_msgs::Skeletons::SKELETON_COUNT; i++)
+    {
+      if(skeletons_msgs->skeletons[i].skeleton_tracking_state == kinect_msgs::Skeleton::SKELETON_TRACKED)
+      {
+        for(size_t j = 0; j < kinect_msgs::Skeleton::SKELETON_POSITION_COUNT; j++)
+        {
+          //msg->skeletons[i].skeleton_positions[j]
+          tf::transformMsgToTF(skeletons_msgs->skeletons[i].skeleton_positions[j], tf);
+          tf = stf * tf;
+          tf::transformTFToMsg(tf, skeletons_msgs->skeletons[i].skeleton_positions[j]);
+        }
+
+        tf::transformMsgToTF(skeletons_msgs->skeletons[i].position, tf);
+        tf = stf * tf;
+        tf::transformTFToMsg(tf, skeletons_msgs->skeletons[i].position);
+      }
+    }
+  }
 }
 
 void MidemUserInteraction::callbackArmsSkelentons(const interaction_msgs::ArmsConstPtr& arms_msg,
