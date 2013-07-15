@@ -175,36 +175,32 @@ void RubberBandHandGestureDetector::lookForGesture(interaction_msgs::Gestures& g
                               r_activated_,
                               r_leaving_,
                               r_die_);
-    /*
-    switch(hand_states_[i].state)
-    {
-      case IDEL: ROS_INFO("hand %d IDEL", i); break;
-      case ACTIVATING: ROS_INFO("hand %d ACTIVATING", i); break;
-      case ACTIVATED: ROS_INFO("hand %d ACTIVATED", i); break;
-      case MOVING: ROS_INFO("hand %d MOVING", i); break;
-      case LEAVING: ROS_INFO("hand %d LEAVING", i); break;
-    }
-    */
-
     if(hand_states_[i].state == MOVING)
     {
-      std::stringstream ss;
-      interaction_msgs::Gesture gesture;
       directions[i] = checkDirection(vec_to_hand);
-      switch(directions[i])
-      {
-        case UP: ss << ONE_HANDED << i << "_UP"; break;
-        case DOWN: ss << ONE_HANDED << i << "_DOWN"; break;
-        case LEFT: ss << ONE_HANDED << i << "_LEFT"; break;
-        case RIGHT: ss << ONE_HANDED << i << "_RIGHT"; break;
-        case FORWARD: ss << ONE_HANDED << i << "_FORWARD"; break;
-        case BACKWARD: ss << ONE_HANDED << i << "_BACKWARD"; break;
-      }
-      ROS_DEBUG_STREAM(ss.str());
+    }
+  }
+
+  if(hand_states_.size() == 1)
+  {
+    interaction_msgs::Gesture gesture;
+    std::stringstream ss;
+    switch(directions[0])
+    {
+      case UP: ss << ONE_HANDED << "UP"; break;
+      case DOWN: ss << ONE_HANDED << "DOWN"; break;
+      case LEFT: ss << ONE_HANDED << "LEFT"; break;
+      case RIGHT: ss << ONE_HANDED << "RIGHT"; break;
+      case FORWARD: ss << ONE_HANDED << "FORWARD"; break;
+      case BACKWARD: ss << ONE_HANDED << "BACKWARD"; break;
+    }
+    if(ss.str().length() != 0)
+    {
       gesture.name = ss.str();
       gestures.gestures.push_back(gesture);
     }
   }
+
 
   if(hand_states_.size() == 2)
   {
@@ -241,6 +237,7 @@ void RubberBandHandGestureDetector::lookForGesture(interaction_msgs::Gestures& g
           gesture.name = TWO_HANDED + "ROTATE_Y-";
         break;
     }
+
     if(gesture.name.length() != 0)
     {
       ROS_DEBUG_STREAM(gesture.name);
