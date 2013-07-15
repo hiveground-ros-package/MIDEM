@@ -81,6 +81,13 @@ protected: //Local
   void callbackArmsSkelentons(const interaction_msgs::ArmsConstPtr& arms_msg,
                               const kinect_msgs::SkeletonsConstPtr& skelentons_msg);
 
+  void getSkeletonMarker(const kinect_msgs::Skeleton& skeleton,
+                         const std::string& frame_id,
+                         const std_msgs::ColorRGBA& color_joint,
+                         const std_msgs::ColorRGBA& color_link,
+                         visualization_msgs::MarkerArray& marker_array,
+                         int& last_marker_id);
+
 protected: //Qt
   void closeEvent(QCloseEvent *evencurrentItemt);
 

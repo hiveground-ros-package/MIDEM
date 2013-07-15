@@ -2,7 +2,9 @@
   <arg name="camera1" default="kinect_top"/>
   <arg name="camera2" default="kinect_front"/> 
 
-  <node pkg="tf" type="static_transform_publisher" name="vp6242_tf" args="-0.1025 -0.8375 0 0 0 0 1 /base_link /table 100" />  
+  <node pkg="tf" type="static_transform_publisher" name="vp6242_tf" args="-0.1025 -0.8375 0 0 0 0 1 /base_link /table 100" />    
+  <node pkg="tf" type="static_transform_publisher" name="skeleton_tf" args="0 0 0 0 0 0 1 /kinect_front_depth_frame /kinect_server 100" />  
+
 
   <node pkg="tf" type="static_transform_publisher" name="$(arg camera1)_tf" 
     args="0.457193063872 0.638211158375 1.31218758894 

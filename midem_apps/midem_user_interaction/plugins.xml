@@ -1,5 +1,8 @@
 <library path="libhg_gesture_detector">
   <class type="hg_gesture_detector::RubberBandHandGestureDetector" base_class_type="hg_gesture_detector::GestureDetector">
-    <description>This is a rubber band gesture detector plugin.</description>
+    <description>This is a rubber band hand gesture detector plugin.</description>
+  </class>
+  <class type="hg_gesture_detector::RubberBandSkeletonGestureDetector" base_class_type="hg_gesture_detector::GestureDetector">
+    <description>This is a rubber band skeleton gesture detector plugin.</description>
   </class>
 </library>

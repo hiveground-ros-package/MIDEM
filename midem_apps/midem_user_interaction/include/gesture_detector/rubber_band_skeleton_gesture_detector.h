@@ -44,6 +44,8 @@ namespace hg_gesture_detector
 class RubberBandSkeletonGestureDetector : public SkelentonGestureDetector
 {
 public:
+  static const std::string SKELETON_GESTURE;
+
   RubberBandSkeletonGestureDetector();
   virtual ~RubberBandSkeletonGestureDetector() { }
 
@@ -53,6 +55,13 @@ public:
   void lookForGesture(interaction_msgs::Gestures& gestures);
 
 protected:
+  tf::Vector3 last_skeleton_position_;
+  tf::Vector3 pivot_position_;
+  ros::Time start_activating_time_;
+  int state_;
+  double r_activating_, r_activated_, r_leaving_, r_die_;
+  double activating_time_;
+  int skeleton_id_;
 
 
 };

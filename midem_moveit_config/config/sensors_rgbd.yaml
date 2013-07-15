@@ -1,6 +1,6 @@
 sensors: 
  - sensor_plugin: occupancy_map_monitor/PointCloudOctomapUpdater2
-   point_cloud_topic: /kinect_top/filtered_output
+   point_cloud_topic: /kinect_top/voxel_grid_output
    filtered_cloud_topic: /kinect_top/self_filtered_output
    max_range: 5.0
    frame_subsample: 1

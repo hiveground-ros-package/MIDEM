@@ -30,56 +30,31 @@
  *
  */
 
-#ifndef HG_RUBBER_BAND_HAND_GESTURE_DETECTOR
-#define HG_RUBBER_BAND_HAND_GESTURE_DETECTOR
-
-#include <tf/tf.h>
-#include <gesture_detector/hand_gesture_detector.h>
-#include <gesture_detector/gesture_detector_defines.h>
+#ifndef GESTURE_DETECTOR_DEFINES_H
+#define GESTURE_DETECTOR_DEFINES_H
 
 namespace hg_gesture_detector
 {
-
-class RubberBandHandGestureDetector : public HandGestureDetector
-{
-public:
-  static const std::string ONE_HANDED;
-  static const std::string TWO_HANDED;
-
-  struct HandState
+  enum
   {
-    HandState()
-    {
-      state = IDEL;
-    }
-
-    int state;
-    tf::Vector3 pivot_position;
-    tf::Vector3 last_hand_position;    
-    ros::Time start_activating_time;
+    IDEL,
+    ACTIVATING,
+    ACTIVATED,
+    MOVING,
+    LEAVING
   };
 
-
-  RubberBandHandGestureDetector();
-  virtual ~RubberBandHandGestureDetector() { }
-
-  bool initialize();
-  void addMessage(const interaction_msgs::ArmsPtr& msg);
-  void getMarkers(visualization_msgs::MarkerArray& marker_array, const std::string& frame_id);
-  void lookForGesture(interaction_msgs::Gestures& gestures);
-
-protected:
-  int closetHandIndex(const tf::Vector3 point, const std::vector<tf::Vector3>& hand_positions);
-
-protected:
-  int last_hand_count_;
-  std::vector<HandState> hand_states_;
-  double r_activating_, r_activated_, r_leaving_, r_die_;
-  double activating_time_;
-
-
-};
-
+  enum
+  {
+    UNKNOW,
+    UP,
+    DOWN,
+    LEFT,
+    RIGHT,
+    FORWARD,
+    BACKWARD
+  };
 }
 
-#endif //HG_RUBBER_BAND_HAND_GESTURE_DETECTOR
+
+#endif

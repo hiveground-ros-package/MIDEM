@@ -2,4 +2,6 @@ midem_user_interaction:
   gesture_detector:
     rubber_band_hand_gesture_detector:
       type: hg_gesture_detector::RubberBandHandGestureDetector
+    rubber_band_skeleton_gesture_detector:
+      type: hg_gesture_detector::RubberBandSkeletonGestureDetector
 

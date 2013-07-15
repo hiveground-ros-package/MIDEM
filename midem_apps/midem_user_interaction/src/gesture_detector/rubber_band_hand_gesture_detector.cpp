@@ -35,11 +35,15 @@
 #include <tf/tf.h>
 
 #include <gesture_detector/rubber_band_hand_gesture_detector.h>
+#include <gesture_detector/gesture_detector_utils.h>
 
 PLUGINLIB_EXPORT_CLASS(hg_gesture_detector::RubberBandHandGestureDetector,hg_gesture_detector::GestureDetector)
 
 using namespace hg_gesture_detector;
 using namespace visualization_msgs;
+
+const std::string RubberBandHandGestureDetector::ONE_HANDED = "RUBBER_BAND_HAND_";
+const std::string RubberBandHandGestureDetector::TWO_HANDED = "RUBBER_BAND_HANDS_";
 
 RubberBandHandGestureDetector::RubberBandHandGestureDetector()
   : last_hand_count_(0),
@@ -162,59 +166,25 @@ void RubberBandHandGestureDetector::lookForGesture(interaction_msgs::Gestures& g
   for(size_t i = 0; i < hand_states_.size(); i++)
   {
     tf::Vector3 vec_to_hand = hand_states_[i].last_hand_position - hand_states_[i].pivot_position;
-    double distance = vec_to_hand.length();
+    rubberBandStateTransition(hand_states_[i].state,
+                              hand_states_[i].pivot_position,
+                              hand_states_[i].last_hand_position,
+                              hand_states_[i].start_activating_time,
+                              activating_time_,
+                              r_activating_,
+                              r_activated_,
+                              r_leaving_,
+                              r_die_);
+    /*
     switch(hand_states_[i].state)
     {
-      case IDEL:
-        ROS_DEBUG("Hand %lu IDEL", i);
-        hand_states_[i].pivot_position = hand_states_[i].last_hand_position;
-        hand_states_[i].state = ACTIVATING;
-        hand_states_[i].start_activating_time = ros::Time::now();
-        break;
-      case ACTIVATING:
-        ROS_DEBUG("Hand %lu ACTIVATING", i);
-        if(distance < r_activating_)
-        {
-          if((ros::Time::now() - hand_states_[i].start_activating_time).toSec() > 2.0)
-          {
-            hand_states_[i].state = ACTIVATED;
-          }
-        }
-        else
-        {
-          hand_states_[i].state = IDEL;
-        }
-        break;
-      case ACTIVATED:
-        ROS_DEBUG("Hand %lu ACTIVATED", i);
-        if(distance >= r_activated_)
-        {
-          hand_states_[i].state = MOVING;
-        }
-        break;
-      case MOVING:
-        ROS_DEBUG("Hand %lu MOVING", i);
-        if(distance < r_activated_)
-        {
-          hand_states_[i].state = ACTIVATED;
-        }
-        else if(distance >= r_leaving_)
-        {
-          hand_states_[i].state = LEAVING;
-        }
-        break;
-      case LEAVING:
-        ROS_DEBUG("Hand %lu LEAVING", i);
-        if(distance >= r_die_)
-        {
-          hand_states_[i].state = IDEL;
-        }
-        else if(distance < r_leaving_)
-        {
-          hand_states_[i].state = MOVING;
-        }
-        break;
+      case IDEL: ROS_INFO("hand %d IDEL", i); break;
+      case ACTIVATING: ROS_INFO("hand %d ACTIVATING", i); break;
+      case ACTIVATED: ROS_INFO("hand %d ACTIVATED", i); break;
+      case MOVING: ROS_INFO("hand %d MOVING", i); break;
+      case LEAVING: ROS_INFO("hand %d LEAVING", i); break;
     }
+    */
 
     if(hand_states_[i].state == MOVING)
     {
@@ -223,12 +193,12 @@ void RubberBandHandGestureDetector::lookForGesture(interaction_msgs::Gestures& g
       directions[i] = checkDirection(vec_to_hand);
       switch(directions[i])
       {
-        case UP: ss << "RUBBER_BAND_" << i << "_UP"; break;
-        case DOWN: ss << "RUBBER_BAND_" << i << "_DOWN"; break;
-        case LEFT: ss << "RUBBER_BAND_" << i << "_LEFT"; break;
-        case RIGHT: ss << "RUBBER_BAND_" << i << "_RIGHT"; break;
-        case FORWARD: ss << "RUBBER_BAND_" << i << "_FORWARD"; break;
-        case BACKWARD: ss << "RUBBER_BAND_" << i << "_BACKWARD"; break;
+        case UP: ss << ONE_HANDED << i << "_UP"; break;
+        case DOWN: ss << ONE_HANDED << i << "_DOWN"; break;
+        case LEFT: ss << ONE_HANDED << i << "_LEFT"; break;
+        case RIGHT: ss << ONE_HANDED << i << "_RIGHT"; break;
+        case FORWARD: ss << ONE_HANDED << i << "_FORWARD"; break;
+        case BACKWARD: ss << ONE_HANDED << i << "_BACKWARD"; break;
       }
       ROS_DEBUG_STREAM(ss.str());
       gesture.name = ss.str();
@@ -252,23 +222,23 @@ void RubberBandHandGestureDetector::lookForGesture(interaction_msgs::Gestures& g
     {
       case UP:
         if(dir_right == DOWN)
-          gesture.name = "RUBBER_BAND_ROTATE_X-";
+          gesture.name = TWO_HANDED + "ROTATE_X-";
         break;
       case DOWN:
         if(dir_right == UP)
-          gesture.name = "RUBBER_BAND_ROTATE_X+";
+          gesture.name = TWO_HANDED + "ROTATE_X+";
         break;
       case FORWARD:
         if(dir_right == FORWARD)
-          gesture.name = "RUBBER_BAND_ROTATE_Y+";
+          gesture.name = TWO_HANDED + "ROTATE_Y+";
         else if(dir_right == BACKWARD)
-          gesture.name = "RUBBER_BAND_ROTATE_Z+";
+          gesture.name = TWO_HANDED + "ROTATE_Z+";
         break;
       case BACKWARD:
         if(dir_right == FORWARD)
-          gesture.name = "RUBBER_BAND_ROTATE_Z-";
+          gesture.name = TWO_HANDED + "ROTATE_Z-";
         else if(dir_right == BACKWARD)
-          gesture.name = "RUBBER_BAND_ROTATE_Y-";
+          gesture.name = TWO_HANDED + "ROTATE_Y-";
         break;
     }
     if(gesture.name.length() != 0)
@@ -294,71 +264,4 @@ int RubberBandHandGestureDetector::closetHandIndex(const tf::Vector3 point,
     }
   }
   return index;
-}
-
-int RubberBandHandGestureDetector::checkDirection(const tf::Vector3& vec_to_hand)
-{
-  tf::Vector3 main_axes[3];
-  main_axes[0] = tf::Vector3(1, 0, 0); //X
-  main_axes[1] = tf::Vector3(0, 1, 0); //Y
-  main_axes[2] = tf::Vector3(0, 0, 1); //Z
-
-  double min_error = 1e6;
-  int min_error_index = -1;
-  double dot_products[3];
-  for (int i = 0; i < 3; i++)
-  {
-    dot_products[i] = vec_to_hand.dot(main_axes[i]);
-    if ((1 - fabs(dot_products[i])) < min_error)
-    {
-      min_error = 1 - fabs(dot_products[i]);
-      min_error_index = i;
-    }
-  }
-
-  switch (min_error_index)
-  {
-    case 0:
-      if (dot_products[min_error_index] > 0)
-      {
-        ROS_DEBUG("X+");
-        return FORWARD;
-      }
-      else
-      {
-        ROS_DEBUG("X-");
-        return BACKWARD;
-      }
-      break;
-    case 1:
-      if (dot_products[min_error_index] > 0)
-      {
-        ROS_DEBUG("Y+");
-        return RIGHT;
-      }
-      else
-      {
-        ROS_DEBUG("Y-");
-        return LEFT;
-      }
-      break;
-    case 2:
-      if (dot_products[min_error_index] > 0)
-      {
-        ROS_DEBUG("Z+");
-        return UP;
-      }
-      else
-      {
-        ROS_DEBUG("Z-");
-        return DOWN;
-      }
-      break;
-    default:
-      ROS_ERROR("Something wrong!");
-      return UNKNOW;
-      break;
-  }
-
-
 }
