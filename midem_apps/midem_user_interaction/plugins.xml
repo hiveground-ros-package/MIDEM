@@ -5,4 +5,7 @@
   <class type="hg_gesture_detector::RubberBandSkeletonGestureDetector" base_class_type="hg_gesture_detector::GestureDetector">
     <description>This is a rubber band skeleton gesture detector plugin.</description>
   </class>
+  <class type="hg_gesture_detector::ElbowFlappingSkeletonGestureDetector" base_class_type="hg_gesture_detector::GestureDetector">
+    <description>This is a elbows flapping skeleton gesture detector plugin.</description>
+  </class>
 </library>

@@ -27,34 +27,43 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * Author: Mahisorn Wongphati
- *
  */
 
-#ifndef GESTURE_DETECTOR_DEFINES_H
-#define GESTURE_DETECTOR_DEFINES_H
+#ifndef ELBOW_FLAPPING_SKELETON_GESTURE_DETECTOR_H_
+#define ELBOW_FLAPPING_SKELETON_GESTURE_DETECTOR_H_
+
+#include <tf/tf.h>
+#include "skeleton_gesture_detector.h"
+
 
 namespace hg_gesture_detector
 {
-  enum
-  {
-    IDEL,
-    ACTIVATING,
-    ACTIVATED,
-    MOVING,
-    LEAVING
-  };
 
-  enum
-  {
-    UNKNOWN,
-    UP,
-    DOWN,
-    LEFT,
-    RIGHT,
-    FORWARD,
-    BACKWARD
-  };
+class ElbowFlappingSkeletonGestureDetector : public SkelentonGestureDetector
+{
+  static const int MAX_ELBOW_PATH = 20;
+
+public:
+  static const std::string SKELETON_GESTURE;
+
+  ElbowFlappingSkeletonGestureDetector();
+  virtual ~ElbowFlappingSkeletonGestureDetector() { }
+
+  bool initialize();
+  void addMessage(const kinect_msgs::Skeleton& msg);
+  void getMarkers(visualization_msgs::MarkerArray& marker_array, const std::string& frame_id);
+  void lookForGesture(interaction_msgs::Gestures& gestures);
+
+protected:
+  int skeleton_id_;
+  std::list<tf::Transform> left_elbow_path_;
+  std::list<tf::Transform> right_elbow_path_;
+  double min_flapping_length_;
+  double detect_rate_;
+  ros::Time last_detected_time_;
+};
+
 }
 
 
-#endif
+#endif /* ELBOW_FLAPPING_SKELETON_GESTURE_DETECTOR_H_ */

@@ -73,7 +73,6 @@ void RubberBandSkeletonGestureDetector::addMessage(const kinect_msgs::Skeleton& 
 
 void RubberBandSkeletonGestureDetector::getMarkers(visualization_msgs::MarkerArray& marker_array, const std::string& frame_id)
 {
-  //ROS_INFO("bbb");
   Marker marker;
   marker.lifetime = ros::Duration(0.1);
   marker.header.frame_id = frame_id;
@@ -156,17 +155,6 @@ void RubberBandSkeletonGestureDetector::lookForGesture(interaction_msgs::Gesture
                             r_activated_,
                             r_leaving_,
                             r_die_);
-
-  /*
-  switch(state_)
-  {
-    case IDEL: ROS_INFO("skeleton %d IDEL", skeleton_id_); break;
-    case ACTIVATING: ROS_INFO("skeleton %d ACTIVATING", skeleton_id_); break;
-    case ACTIVATED: ROS_INFO("skeleton %d ACTIVATED", skeleton_id_); break;
-    case MOVING: ROS_INFO("skeleton %d MOVING", skeleton_id_); break;
-    case LEAVING: ROS_INFO("skeleton %d LEAVING", skeleton_id_); break;
-  }
-  */
   if(state_ == MOVING)
   {
     std::stringstream ss;

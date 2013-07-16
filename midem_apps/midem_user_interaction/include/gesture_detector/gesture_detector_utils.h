@@ -97,20 +97,21 @@ namespace hg_gesture_detector
         break;
       default:
         ROS_ERROR("Something wrong!");
-        return UNKNOW;
+        return UNKNOWN;
         break;
     }
+    return UNKNOWN;
   }
 
   inline void rubberBandStateTransition(int& state,
-                                        tf::Vector3& pivot_position,
-                                        const tf::Vector3& last_position,
-                                        ros::Time& start_activating_time,
-                                        double activating_time,
-                                        double r_activating,
-                                        double r_activated,
-                                        double r_leaving,
-                                        double r_die)
+                                             tf::Vector3& pivot_position,
+                                             const tf::Vector3& last_position,
+                                             ros::Time& start_activating_time,
+                                             double activating_time,
+                                             double r_activating,
+                                             double r_activated,
+                                             double r_leaving,
+                                             double r_die)
   {
     tf::Vector3 vec_to_center = last_position - pivot_position;
     double distance = vec_to_center.length();

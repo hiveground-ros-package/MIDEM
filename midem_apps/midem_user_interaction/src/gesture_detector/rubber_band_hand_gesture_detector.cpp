@@ -162,7 +162,7 @@ void RubberBandHandGestureDetector::getMarkers(visualization_msgs::MarkerArray& 
 
 void RubberBandHandGestureDetector::lookForGesture(interaction_msgs::Gestures& gestures)
 {
-  std::vector<int> directions(hand_states_.size(), UNKNOW);
+  std::vector<int> directions(hand_states_.size(), UNKNOWN);
   for(size_t i = 0; i < hand_states_.size(); i++)
   {
     tf::Vector3 vec_to_hand = hand_states_[i].last_hand_position - hand_states_[i].pivot_position;

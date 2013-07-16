@@ -131,7 +131,7 @@ void MidemUserInteraction::callbackArms(const interaction_msgs::ArmsConstPtr &ms
     {
       tf_listener_.lookupTransform(working_frame_, arm_msgs->header.frame_id, ros::Time(0), stf);
     }
-    catch (tf::TransformException ex)
+    catch (tf::TransformException& ex)
     {
       ROS_ERROR("%s",ex.what());
       return;
@@ -165,7 +165,7 @@ void MidemUserInteraction::callbackArms(const interaction_msgs::ArmsConstPtr &ms
     }
   }
 
-  if(arm_gesture_pub_.getNumSubscribers() != 0)
+  if(arm_gesture_pub_.getNumSubscribers() != 0 && gestures_msg->gestures.size() != 0)
   {
     gestures_msg->header.stamp = ros::Time::now();
     gestures_msg->header.frame_id = arm_msgs->header.frame_id;
@@ -190,7 +190,7 @@ void MidemUserInteraction::callbackSkeletons(const kinect_msgs::SkeletonsConstPt
     {
       tf_listener_.lookupTransform(working_frame_, skeletons_msgs->header.frame_id, ros::Time(0), stf);
     }
-    catch (tf::TransformException ex)
+    catch (tf::TransformException& ex)
     {
       ROS_ERROR("%s",ex.what());
       return;
@@ -255,7 +255,7 @@ void MidemUserInteraction::callbackSkeletons(const kinect_msgs::SkeletonsConstPt
     }
   }
 
-  if(skeleton_gesture_pub_.getNumSubscribers() != 0)
+  if(skeleton_gesture_pub_.getNumSubscribers() != 0 && gestures_msg->gestures.size() != 0)
   {
     gestures_msg->header.stamp = ros::Time::now();
     gestures_msg->header.frame_id = skeletons_msgs->header.frame_id;
