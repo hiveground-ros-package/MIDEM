@@ -1,0 +1,7 @@
+<launch>
+  <include file="$(find midem_common)/launch/transform.launch"/>  
+  <include file="$(find midem_common)/launch/sensors.launch"/>
+  <include file="$(find pcl_object_clustering)/launch/object_clustering.launch"/>
+  <include file="$(find pcl_hand_arm_detector)/launch/hand_arm_detector.launch"/>
+  <include file="$(find midem_user_interaction)/launch/user_interaction.launch"/>
+</launch>

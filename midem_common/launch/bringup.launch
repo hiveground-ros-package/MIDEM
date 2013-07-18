@@ -1,15 +1,17 @@
-<launch>
-  <arg name="xacro" default="urdf/midem.xacro"/>
+<launch> 
+  <arg name="real" default="false"/>
+  <arg name="xacro"/>
   <param name="robot_description" command="$(find xacro)/xacro.py '$(find midem_description)/$(arg xacro)'"/>
 
   <node ns="midem" pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen">
     <remap from="joint_states" to="/midem/joint_states" />
   </node>
 
+
   <!-- Robot controller -->
   <node ns="midem" pkg="denso_rc7m_controller" type="denso_rc7m_controller" name="rc7m_controller" output="screen">
     <rosparam>
-      realtime: false 
+      realtime: $(arg real)
       prefix: "" 
       simulate: true 
       ip: "10.0.0.101" 
