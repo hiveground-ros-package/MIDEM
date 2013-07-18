@@ -1,5 +1,6 @@
 <launch> 
-  <arg name="real" default="false"/>
+  <arg name="real_time" default="false"/>
+  <arg name="simulate" default="false"/>
   <arg name="xacro"/>
   <param name="robot_description" command="$(find xacro)/xacro.py '$(find midem_description)/$(arg xacro)'"/>
 
@@ -11,9 +12,9 @@
   <!-- Robot controller -->
   <node ns="midem" pkg="denso_rc7m_controller" type="denso_rc7m_controller" name="rc7m_controller" output="screen">
     <rosparam>
-      realtime: $(arg real)
+      realtime: $(arg real_time)
       prefix: "" 
-      simulate: true 
+      simulate: $(arg simulate) 
       ip: "10.0.0.101" 
       port: "5007"
     </rosparam>
