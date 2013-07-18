@@ -1,5 +1,0 @@
-<launch>
-  <include file="$(find midem_common)/launch/transform.launch"/>
-  <include file="$(find midem_common)/launch/bringup.launch"/>
-  <include file="$(find midem_moveit_config)/launch/midem_moveit_planning_execution.launch"/>
-</launch>
