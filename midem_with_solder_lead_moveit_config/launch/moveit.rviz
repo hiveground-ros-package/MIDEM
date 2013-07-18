@@ -1,6 +1,6 @@
 Panels:
   - Class: rviz/Displays
-    Help Height: 0
+    Help Height: 84
     Name: Displays
     Property Tree Widget:
       Expanded:
@@ -9,16 +9,13 @@ Panels:
         - /MotionPlanning1/Scene Geometry1
         - /MotionPlanning1/Scene Robot1
         - /MotionPlanning1/Planning Request1
-        - /MotionPlanning1/Planning Metrics1
         - /MotionPlanning1/Planned Path1
-        - /KinectTop1
-        - /TF_frame1
-        - /TF_frame1/Frames1
-        - /TF_frame1/Tree1
-        - /ArmGestureMarkerArray1
-        - /SkeletonGestureMarkerArray1
-      Splitter Ratio: 0.742378
-    Tree Height: 434
+        - /RobotModel1
+        - /RobotModel1/Links1
+        - /RobotModel1/Links1/lead1
+        - /InteractiveMarkers1
+      Splitter Ratio: 0.74256
+    Tree Height: 522
   - Class: rviz/Help
     Name: Help
   - Class: rviz/Views
@@ -62,6 +59,26 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
+          clip_base:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          clip_cover:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          force_sensor_base:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lead:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
           link1:
             Alpha: 1
             Show Axes: false
@@ -95,7 +112,7 @@ Visualization Manager:
         Loop Animation: false
         Robot Alpha: 0.5
         Show Robot Collision: false
-        Show Robot Visual: true
+        Show Robot Visual: false
         Show Trail: false
         State Display Time: 0.05 s
         Trajectory Topic: /move_group/display_planned_path
@@ -112,7 +129,7 @@ Visualization Manager:
         Goal State Color: 250; 128; 0
         Interactive Marker Size: 0
         Joint Violation Color: 255; 0; 255
-        Planning Group: manipulator
+        Planning Group: solder_lead
         Query Goal State: false
         Query Start State: false
         Show Workspace: false
@@ -123,14 +140,34 @@ Visualization Manager:
       Scene Geometry:
         Scene Alpha: 0.9
         Scene Color: 50; 230; 50
-        Scene Display Time: 0.1
-        Show Scene Geometry: false
+        Scene Display Time: 0.2
+        Show Scene Geometry: true
         Voxel Coloring: Z-Axis
         Voxel Rendering: Occupied Voxels
       Scene Robot:
         Attached Body Color: 150; 50; 150
         Links:
           base_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          clip_base:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          clip_cover:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          force_sensor_base:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          lead:
             Alpha: 1
             Show Axes: false
             Show Trail: false
@@ -178,6 +215,26 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+        clip_base:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        clip_cover:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        force_sensor_base:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        lead:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         link1:
           Alpha: 1
           Show Axes: false
@@ -217,178 +274,16 @@ Visualization Manager:
     - Class: rviz/InteractiveMarkers
       Enable Transparency: true
       Enabled: true
-      Name: InteractiveProbe
+      Name: InteractiveMarkers
       Show Axes: false
       Show Descriptions: true
       Show Visual Aids: false
       Update Topic: /InteractiveProbe/update
       Value: true
-    - Alpha: 1
-      Autocompute Intensity Bounds: true
-      Autocompute Value Bounds:
-        Max Value: 10
-        Min Value: -10
-        Value: true
-      Axis: Z
-      Channel Name: intensity
-      Class: rviz/PointCloud2
-      Color: 255; 255; 255
-      Color Transformer: RGB8
-      Decay Time: 0
-      Enabled: false
-      Max Color: 255; 255; 255
-      Max Intensity: 4096
-      Min Color: 0; 0; 0
-      Min Intensity: 0
-      Name: KinectFront
-      Position Transformer: XYZ
-      Queue Size: 10
-      Selectable: true
-      Size (Pixels): 3
-      Size (m): 0.01
-      Style: Points
-      Topic: /kinect_top/filtered_output
-      Use Fixed Frame: true
-      Use rainbow: true
-      Value: false
-    - Alpha: 1
-      Autocompute Intensity Bounds: true
-      Autocompute Value Bounds:
-        Max Value: 10
-        Min Value: -10
-        Value: true
-      Axis: Z
-      Channel Name: intensity
-      Class: rviz/PointCloud2
-      Color: 255; 255; 255
-      Color Transformer: RGB8
-      Decay Time: 0
-      Enabled: true
-      Max Color: 255; 255; 255
-      Max Intensity: 4096
-      Min Color: 0; 0; 0
-      Min Intensity: 0
-      Name: KinectTop
-      Position Transformer: XYZ
-      Queue Size: 10
-      Selectable: true
-      Size (Pixels): 3
-      Size (m): 0.01
-      Style: Points
-      Topic: /kinect_top/self_filtered_output
-      Use Fixed Frame: true
-      Use rainbow: true
-      Value: true
-    - Class: rviz/Axes
-      Enabled: false
-      Length: 1
-      Name: Axes
-      Radius: 0.01
-      Reference Frame: <Fixed Frame>
-      Value: false
-    - Class: rviz/TF
-      Enabled: true
-      Frame Timeout: 1
-      Frames:
-        /base_link:
-          Value: true
-        /kinect_front_depth_frame:
-          Value: true
-        /kinect_front_depth_optical_frame:
-          Value: true
-        /kinect_front_rgb_frame:
-          Value: true
-        /kinect_front_rgb_optical_frame:
-          Value: true
-        /kinect_server:
-          Value: true
-        /kinect_top_depth_frame:
-          Value: true
-        /kinect_top_depth_optical_frame:
-          Value: true
-        /kinect_top_rgb_frame:
-          Value: true
-        /kinect_top_rgb_optical_frame:
-          Value: true
-        /link1:
-          Value: true
-        /link2:
-          Value: true
-        /link3:
-          Value: true
-        /link4:
-          Value: true
-        /link5:
-          Value: true
-        /link6:
-          Value: true
-        /table:
-          Value: true
-        /tool0:
-          Value: true
-        /world:
-          Value: true
-        All Enabled: false
-      Marker Scale: 0.5
-      Name: TF_frame
-      Show Arrows: false
-      Show Axes: true
-      Show Names: true
-      Tree:
-        /world:
-          /base_link:
-            /link1:
-              /link2:
-                /link3:
-                  /link4:
-                    /link5:
-                      /link6:
-                        /tool0:
-                          {}
-            /table:
-              /kinect_top_rgb_optical_frame:
-                /kinect_front_rgb_optical_frame:
-                  /kinect_front_depth_optical_frame:
-                    /kinect_front_depth_frame:
-                      /kinect_server:
-                        {}
-                  /kinect_front_rgb_frame:
-                    {}
-                /kinect_top_depth_optical_frame:
-                  /kinect_top_depth_frame:
-                    {}
-                /kinect_top_rgb_frame:
-                  {}
-      Update Interval: 0
-      Value: true
-    - Class: rviz/MarkerArray
-      Enabled: true
-      Marker Topic: /pcl_hand_arm_detector/hand_arm_markers
-      Name: Objects
-      Namespaces:
-        {}
-      Queue Size: 100
-      Value: true
-    - Class: rviz/MarkerArray
-      Enabled: true
-      Marker Topic: /midem_user_interaction/arm_gesture_markers
-      Name: ArmGestureMarkerArray
-      Namespaces:
-        {}
-      Queue Size: 100
-      Value: true
-    - Class: rviz/MarkerArray
-      Enabled: true
-      Marker Topic: /midem_user_interaction/skeleton_gesture_markers
-      Name: SkeletonGestureMarkerArray
-      Namespaces:
-        {}
-      Queue Size: 100
-      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
-    Fixed Frame: /base_link
+    Fixed Frame: /world
   Name: root
   Tools:
     - Class: rviz/Interact
@@ -399,17 +294,17 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/XYOrbit
-      Distance: 2.5337
+      Distance: 2.18376
       Focal Point:
-        X: 0.474855
-        Y: -0.0186715
-        Z: 6.51212e-07
+        X: 0.717819
+        Y: 0.25174
+        Z: 2.23518e-07
       Name: Current View
       Near Clip Distance: 0.01
-      Pitch: 0.600203
+      Pitch: 0.754798
       Target Frame: /base_link
       Value: XYOrbit (rviz)
-      Yaw: 0.532263
+      Yaw: 0.361764
     Saved: ~
 Window Geometry:
   Displays:
@@ -418,12 +313,12 @@ Window Geometry:
   Help:
     collapsed: false
   Hide Left Dock: false
-  Hide Right Dock: true
+  Hide Right Dock: false
   Motion Planning:
     collapsed: false
-  QMainWindow State: 000000ff00000000fd0000000100000000000002a200000436fc0200000005fb000000100044006900730070006c0061007900730100000028000001f3000000dd00fffffffb0000000800480065006c00700000000342000000bb0000007600fffffffb0000000a0056006900650077007300000003b0000000b0000000b000fffffffb0000000c00430061006d00650072006100000002ff000001610000000000000000fb0000001e004d006f00740069006f006e00200050006c0061006e006e0069006e006701000002210000023d0000017400ffffff000000ff0000043600000001000000020000000100000002fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd0000000100000000000002a200000436fc0200000005fb000000100044006900730070006c00610079007301000000280000029f000000dd00fffffffb0000000800480065006c00700000000342000000bb0000007600fffffffb0000000a0056006900650077007300000003b0000000b0000000b000fffffffb0000000c00430061006d00650072006100000002ff000001610000000000000000fb0000001e004d006f00740069006f006e00200050006c0061006e006e0069006e006701000002cd000001910000017400ffffff0000030a0000043600000001000000020000000100000002fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Views:
     collapsed: false
-  Width: 935
-  X: 970
+  Width: 1458
+  X: 447
   Y: 24

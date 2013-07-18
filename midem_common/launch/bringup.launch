@@ -1,5 +1,6 @@
 <launch>
-  <param name="robot_description" textfile="$(find midem_description)/urdf/midem.urdf"/>
+  <arg name="xacro" default="urdf/midem.xacro"/>
+  <param name="robot_description" command="$(find xacro)/xacro.py '$(find midem_description)/$(arg xacro)'"/>
 
   <node ns="midem" pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen">
     <remap from="joint_states" to="/midem/joint_states" />

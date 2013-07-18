@@ -3,14 +3,14 @@
   <arg name="load_robot_description" default="false"/>
 
   <!-- Load universal robotic description format (URDF) -->
-  <param if="$(arg load_robot_description)" name="robot_description" command="$(find xacro)/xacro.py '$(find midem_description)/urdf/midem.xacro'" />
+  <param if="$(arg load_robot_description)" name="robot_description" command="$(find xacro)/xacro.py '$(find midem_description)/urdf/midem_with_solder_lead.xacro'" />
       
   <!-- The semantic description that corresponds to the URDF -->
-  <param name="robot_description_semantic" textfile="$(find midem_moveit_config)/config/midem.srdf" />
+  <param name="robot_description_semantic" textfile="$(find midem_with_solder_lead_moveit_config)/config/midem_with_solder_lead.srdf" />
   
   <!-- Load to the parameter server yaml files -->
   <group ns="robot_description_planning">    
-    <rosparam command="load" file="$(find midem_moveit_config)/config/joint_limits.yaml"/>
+    <rosparam command="load" file="$(find midem_with_solder_lead_moveit_config)/config/joint_limits.yaml"/>
   </group>
   
 </launch>
