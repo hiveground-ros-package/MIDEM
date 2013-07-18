@@ -28,10 +28,10 @@
     <origin xyz="0 0 0" rpy="0 0 0"/>
   </joint>
   
-	<link name="clip_base">
+  <link name="clip_base">
     <visual>
       <geometry>
-  			<mesh filename="${mesh_path2}/holder/meshes/clip_base.dae" scale="${mesh_scale2}"/>
+  		<mesh filename="${mesh_path2}/holder/meshes/clip_base.dae" scale="${mesh_scale2}"/>
       </geometry>
       <origin rpy="3.141592 0 1.570796" xyz="-0.01 0 0.015"/>
     </visual>
@@ -45,13 +45,13 @@
   <joint name="base_clip_base" type="fixed">
     <parent link="force_sensor_base"/>
     <child link="clip_base"/>
-    <origin xyz="0 0 0.068" rpy="0 -0.2 0"/>
+    <origin xyz="0 0 0.068" rpy="0 -0.3 0"/>
   </joint>
   
   <link name="clip_cover">
     <visual>
       <geometry>
-  			<mesh filename="${mesh_path2}/holder/meshes/clip_cover.dae" scale="${mesh_scale2}"/>
+  		<mesh filename="${mesh_path2}/holder/meshes/clip_cover.dae" scale="${mesh_scale2}"/>
       </geometry>
       <origin rpy="0 0 1.570796" xyz="0.01 0 0"/>
     </visual>
@@ -71,7 +71,7 @@
   <link name="lead">
     <visual>
       <geometry>
-  			<cylinder radius="0.01" length="0.095"/>
+  		<cylinder radius="0.01" length="0.095"/>
       </geometry>
       <material name="Cyan">
         <color rgba="0 1.0 1.0 1.0"/>
@@ -80,7 +80,7 @@
     </visual>
     <collision>
       <geometry>
-  			<cylinder radius="0.011" length="0.11"/>
+  		<cylinder radius="0.011" length="0.11"/>
       </geometry>
       <origin rpy="0 0 0" xyz="0 0 -0.0475"/>    
     </collision>
