@@ -47,7 +47,7 @@ const std::string RubberBandSkeletonGestureDetector::SKELETON_GESTURE = "RUBBER_
 
 RubberBandSkeletonGestureDetector::RubberBandSkeletonGestureDetector()
   : state_(IDEL),
-    r_activating_(0.02), r_activated_(0.02), r_leaving_(0.08), r_die_(0.1),
+    r_activating_(0.02), r_activated_(0.03), r_leaving_(0.08), r_die_(0.1),
     activating_time_(2.0)
 {
 
