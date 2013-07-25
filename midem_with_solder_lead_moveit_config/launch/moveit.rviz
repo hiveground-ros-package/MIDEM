@@ -19,7 +19,7 @@ Panels:
         - /MarkerArray2
         - /MarkerArray3
       Splitter Ratio: 0.74256
-    Tree Height: 505
+    Tree Height: 353
   - Class: rviz/Help
     Name: Help
   - Class: rviz/Views
@@ -58,6 +58,11 @@ Visualization Manager:
       Name: MotionPlanning
       Planned Path:
         Links:
+          All Links Enabled: true
+          Expand Joint Details: false
+          Expand Link Details: false
+          Expand Tree: false
+          Link Tree Style: Links in Alphabetic Order
           base_link:
             Alpha: 1
             Show Axes: false
@@ -113,6 +118,14 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
+          tool0:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          world:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
         Loop Animation: false
         Robot Alpha: 0.5
         Show Robot Collision: true
@@ -151,6 +164,11 @@ Visualization Manager:
       Scene Robot:
         Attached Body Color: 150; 50; 150
         Links:
+          All Links Enabled: true
+          Expand Joint Details: false
+          Expand Link Details: false
+          Expand Tree: false
+          Link Tree Style: Links in Alphabetic Order
           base_link:
             Alpha: 1
             Show Axes: false
@@ -206,6 +224,14 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
+          tool0:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          world:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
         Robot Alpha: 0.5
         Show Scene Robot: false
       Value: true
@@ -214,6 +240,11 @@ Visualization Manager:
       Collision Enabled: false
       Enabled: true
       Links:
+        All Links Enabled: true
+        Expand Joint Details: false
+        Expand Link Details: false
+        Expand Tree: false
+        Link Tree Style: Links in Alphabetic Order
         base_link:
           Alpha: 1
           Show Axes: false
@@ -269,6 +300,14 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+        tool0:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        world:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
       Name: RobotModel
       Robot Description: robot_description
       TF Prefix: ""
@@ -289,7 +328,9 @@ Visualization Manager:
       Marker Topic: /midem_user_interaction/skeleton_gesture_markers
       Name: MarkerArray
       Namespaces:
-        {}
+        ElbowFlappingSkeletonGestureDetector: true
+        KinectSkeleton: true
+        RubberBandSkeletonGestureDetector: true
       Queue Size: 100
       Value: true
     - Alpha: 1
@@ -352,17 +393,17 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/XYOrbit
-      Distance: 2.45653
+      Distance: 1.90234
       Focal Point:
-        X: 0.459902
-        Y: 0.162185
+        X: 0.719498
+        Y: 0.153658
         Z: 2.23518e-07
       Name: Current View
       Near Clip Distance: 0.01
-      Pitch: 0.529799
+      Pitch: 0.8948
       Target Frame: /base_link
       Value: XYOrbit (rviz)
-      Yaw: 1.67494
+      Yaw: 0.56994
     Saved:
       - Class: rviz/XYOrbit
         Distance: 0.970287
@@ -390,5 +431,5 @@ Window Geometry:
   Views:
     collapsed: true
   Width: 935
-  X: 971
+  X: 43
   Y: 24

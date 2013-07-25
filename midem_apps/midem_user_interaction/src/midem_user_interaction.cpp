@@ -183,6 +183,8 @@ void MidemUserInteraction::callbackSkeletons(const kinect_msgs::SkeletonsConstPt
 { 
   kinect_msgs::SkeletonsPtr skeletons_msgs(new kinect_msgs::Skeletons);
   *skeletons_msgs = *msg;
+  int closet_index = -1;
+  double closet_distance = 1e6;
   if(skeletons_msgs->header.frame_id != working_frame_)
   {
     tf::StampedTransform stf;
@@ -196,14 +198,13 @@ void MidemUserInteraction::callbackSkeletons(const kinect_msgs::SkeletonsConstPt
       return;
     }
 
-    tf::Transform tf;    
+    tf::Transform tf;
     for(size_t i = 0; i < kinect_msgs::Skeletons::SKELETON_COUNT; i++)
     {
       if(skeletons_msgs->skeletons[i].skeleton_tracking_state == kinect_msgs::Skeleton::SKELETON_TRACKED)
       {
         for(size_t j = 0; j < kinect_msgs::Skeleton::SKELETON_POSITION_COUNT; j++)
         {
-          //msg->skeletons[i].skeleton_positions[j]
           tf::transformMsgToTF(skeletons_msgs->skeletons[i].skeleton_positions[j], tf);
           tf = stf * tf;
           tf::transformTFToMsg(tf, skeletons_msgs->skeletons[i].skeleton_positions[j]);
@@ -212,6 +213,12 @@ void MidemUserInteraction::callbackSkeletons(const kinect_msgs::SkeletonsConstPt
         tf::transformMsgToTF(skeletons_msgs->skeletons[i].position, tf);
         tf = stf * tf;
         tf::transformTFToMsg(tf, skeletons_msgs->skeletons[i].position);
+
+        if(tf.getOrigin().length() < closet_distance)
+        {
+          closet_index  = i;
+          closet_distance = tf.getOrigin().length();
+        }
       }
     }
 
@@ -219,6 +226,8 @@ void MidemUserInteraction::callbackSkeletons(const kinect_msgs::SkeletonsConstPt
     skeletons_msgs->header.frame_id = working_frame_;
 
   }
+
+  ROS_INFO_THROTTLE(1.0, "Closet index %d", closet_index);
 
   std_msgs::ColorRGBA color_joint, color_link;
   color_joint.r = 1.0; color_joint.g = 0.0; color_joint.b = 0.0; color_joint.a = 0.5;
@@ -229,6 +238,11 @@ void MidemUserInteraction::callbackSkeletons(const kinect_msgs::SkeletonsConstPt
   interaction_msgs::Gestures::Ptr gestures_msg(new interaction_msgs::Gestures);
   for(size_t i = 0; i < kinect_msgs::Skeletons::SKELETON_COUNT; i++)
   {
+    if(i != closet_index)
+    {
+      continue;
+    }
+
     if(skeletons_msgs->skeletons[i].skeleton_tracking_state == kinect_msgs::Skeleton::SKELETON_TRACKED)
     {
 
