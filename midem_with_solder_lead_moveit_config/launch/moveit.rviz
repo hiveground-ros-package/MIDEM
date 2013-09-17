@@ -5,21 +5,14 @@ Panels:
     Property Tree Widget:
       Expanded:
         - /Global Options1
-        - /MotionPlanning1
         - /MotionPlanning1/Scene Geometry1
         - /MotionPlanning1/Scene Robot1
         - /MotionPlanning1/Planning Request1
         - /MotionPlanning1/Planned Path1
-        - /RobotModel1
         - /RobotModel1/Links1
         - /RobotModel1/Links1/lead1
-        - /InteractiveMarkers1
-        - /MarkerArray1
-        - /PointCloud21
-        - /MarkerArray2
-        - /MarkerArray3
       Splitter Ratio: 0.74256
-    Tree Height: 353
+    Tree Height: 505
   - Class: rviz/Help
     Name: Help
   - Class: rviz/Views
@@ -328,9 +321,7 @@ Visualization Manager:
       Marker Topic: /midem_user_interaction/skeleton_gesture_markers
       Name: MarkerArray
       Namespaces:
-        ElbowFlappingSkeletonGestureDetector: true
-        KinectSkeleton: true
-        RubberBandSkeletonGestureDetector: true
+        {}
       Queue Size: 100
       Value: true
     - Alpha: 1
@@ -366,9 +357,7 @@ Visualization Manager:
       Marker Topic: /pcl_hand_arm_detector/hand_arm_markers
       Name: MarkerArray
       Namespaces:
-        cluster_eigen: true
-        point_history: true
-        simple_marker: true
+        {}
       Queue Size: 100
       Value: true
     - Class: rviz/MarkerArray
@@ -379,6 +368,20 @@ Visualization Manager:
         RubberBandHandGestureDetector: true
       Queue Size: 100
       Value: true
+    - Class: rviz/TF
+      Enabled: false
+      Frame Timeout: 15
+      Frames:
+        All Enabled: true
+      Marker Scale: 1
+      Name: TF
+      Show Arrows: true
+      Show Axes: true
+      Show Names: true
+      Tree:
+        {}
+      Update Interval: 0
+      Value: false
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -393,17 +396,17 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/XYOrbit
-      Distance: 1.90234
+      Distance: 2.65055
       Focal Point:
-        X: 0.719498
-        Y: 0.153658
-        Z: 2.23518e-07
+        X: 0.512697
+        Y: -0.0969185
+        Z: 5.81146e-07
       Name: Current View
       Near Clip Distance: 0.01
-      Pitch: 0.8948
+      Pitch: 0.539797
       Target Frame: /base_link
       Value: XYOrbit (rviz)
-      Yaw: 0.56994
+      Yaw: 0.384926
     Saved:
       - Class: rviz/XYOrbit
         Distance: 0.970287
@@ -419,17 +422,17 @@ Visualization Manager:
         Yaw: 0.379944
 Window Geometry:
   Displays:
-    collapsed: true
+    collapsed: false
   Height: 1148
   Help:
     collapsed: false
-  Hide Left Dock: true
+  Hide Left Dock: false
   Hide Right Dock: true
   Motion Planning:
-    collapsed: true
-  QMainWindow State: 000000ff00000000fd0000000200000000000002a200000436fc0200000004fb000000100044006900730070006c00610079007300000000280000028e000000dd00fffffffb0000000800480065006c00700000000342000000bb0000007600fffffffb0000000c00430061006d00650072006100000002ff000001610000000000000000fb0000001e004d006f00740069006f006e00200050006c0061006e006e0069006e006700000002bc000001a20000017400ffffff000000010000013400000436fc0200000001fb0000000a00560069006500770073000000002800000436000000b000ffffff000003a70000043600000001000000020000000100000002fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+    collapsed: false
+  QMainWindow State: 000000ff00000000fd0000000200000000000002a200000436fc0200000004fb000000100044006900730070006c00610079007301000000280000028e000000dd00fffffffb0000000800480065006c00700000000342000000bb0000007600fffffffb0000000c00430061006d00650072006100000002ff000001610000000000000000fb0000001e004d006f00740069006f006e00200050006c0061006e006e0069006e006701000002bc000001a20000017400ffffff000000010000013400000436fc0200000001fb0000000a00560069006500770073000000002800000436000000b000ffffff000000ff0000043600000001000000020000000100000002fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Views:
     collapsed: true
   Width: 935
-  X: 43
+  X: 42
   Y: 24

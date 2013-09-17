@@ -114,6 +114,21 @@ void RubberBandHandGestureDetector::getMarkers(visualization_msgs::MarkerArray& 
 
   for(size_t i = 0; i < hand_states_.size(); i++)
   {
+    marker.pose.position.x = hand_states_[i].last_hand_position.getX();
+    marker.pose.position.y = hand_states_[i].last_hand_position.getY();
+    marker.pose.position.z = hand_states_[i].last_hand_position.getZ();
+
+    //hand
+    marker.scale.x = marker.scale.y = marker.scale.z = 0.05;
+    marker.color.r = 1.0;
+    marker.color.g = 0.0;
+    marker.color.b = 0.0;
+    marker.color.a = 1.0;
+    marker.id++;
+    marker_array.markers.push_back(marker);
+
+
+
     switch(hand_states_[i].state)
     {
       case IDEL:
